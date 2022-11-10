@@ -6,7 +6,7 @@ const HeaderBar: React.FC = () => {
   return (
     <div className="navbar">
       <div className="navbar-box">
-        <span className="navbar-title">Bee_Farming</span>
+        <span className="navbar-title">Bee_Farming FE</span>
       </div>
     </div>
   );
