@@ -7,7 +7,11 @@ export default defineConfig({
   nodeModulesTransform: {
     type: 'none',
   },
-  routes: [{ path: '/', component: '@/pages/home/index', title: 'BF' }],
+  routes: [
+    { path: '/', component: '@/pages/home/index', title: 'BF' },
+    { path: '/register', component: '@/pages/register/index', title: 'BF' },
+    { path: '/login', component: '@/pages/login/index', title: 'BF' },
+  ],
   title: 'Python_QRCode',
   fastRefresh: {},
   mfsu: {},
