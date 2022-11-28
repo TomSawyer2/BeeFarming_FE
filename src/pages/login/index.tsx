@@ -9,22 +9,20 @@ import './index.less';
 const Page: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [messageApi, contextHolder] = message.useMessage();
   const user = {
-    username: username,
-    password: password
+    username,
+    password
   }
-  const handleLogin = () => {
-    let result = login(user);
-    result.then(
-      (res) => {
-        console.log(res);
-        history.push('')
-      }
-     ).catch(e => {
+  const handleLogin = async () => {
+    try {
+      const res = await login(user);
+      console.log(res);
+      history.push('')
+      message.success('登录成功!');
+      setTimeout(function () { history.push(''); }, 1000);
+    } catch (e) {
       console.log(e);
-      messageApi.warning(e);
-    }) 
+    }
   }
   return (
     <div className="box">
@@ -41,11 +39,9 @@ const Page: React.FC = () => {
           <i></i>
         </div>
         <div className="links">
-          <Link to={{ pathname: '/'}}>Forgot Password ?</Link>
           <Link to={{ pathname:'/register' }}>Sign up</Link>
         </div>
-        {contextHolder} 
-        <Button onClick={() => {handleLogin()}}>Login</Button>
+        <Button className="login-btn" onClick={() => {handleLogin()}}>Login</Button>
       </form>
     </div>
   );

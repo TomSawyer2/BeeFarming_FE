@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 const HTTP_STATUS_SUCCESS_CODE: Array<number> = [200];
@@ -27,6 +28,7 @@ const commonErrorHander = (error: AxiosError) => {
   // @ts-ignore
   const response: AxiosResponse = error.response;
   if (response?.data?.msg) {
+    message.warning(response?.data?.msg);
     throw response.data.msg;
   } else {
     throw error;
