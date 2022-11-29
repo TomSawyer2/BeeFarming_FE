@@ -1,25 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
 
-const Editor: React.FC = () => {
+interface EditorProps {
+  ref: any;
+}
+
+// eslint-disable-next-line react/display-name
+const Editor: React.FC<EditorProps> = forwardRef((props, ref) => {
   const [monaco, setMonaco] = useState<any>();
 
-  // useEffect(() => {
-  //   self.MonacoEnvironment = {
-  //     getWorker: function (workerId, label) {
-  //       const getWorkerModule = (moduleUrl: string, label: string) => {
-  //         return new Worker(self.MonacoEnvironment?.getWorkerUrl?.(moduleUrl, label) ?? '', {
-  //           name: label,
-  //           type: 'module',
-  //         });
-  //       };
-  //       return getWorkerModule('/monaco-editor/esm/vs/language/json/json.worker?worker', label);
-  //     },
-  //   };
-  // }, []);
+  useImperativeHandle(ref, () => ({
+    getContent: () => {
+      return monaco?.editor.getModels()[0].getValue();
+    },
+  }));
 
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '100%' }}>
       <MonacoEditor
         theme="vs-dark"
         language="java"
@@ -33,13 +30,13 @@ const Editor: React.FC = () => {
           formatOnPaste: true,
           overviewRulerBorder: false, // 滚动条的边框
           scrollBeyondLastLine: true,
-          fontSize: 20, // 字体
+          fontSize: 16, // 字体
           language: 'java',
         }}
         editorDidMount={(editor, monacoItem) => setMonaco(monacoItem)}
       />
     </div>
   );
-};
+});
 
 export default Editor;
