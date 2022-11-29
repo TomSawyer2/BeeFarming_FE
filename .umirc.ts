@@ -1,4 +1,5 @@
 import { defineConfig } from 'umi';
+import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
 
 export default defineConfig({
   hash: true,
@@ -9,6 +10,11 @@ export default defineConfig({
   },
   routes: [
     { path: '/', component: '@/pages/home/index', title: 'BF' },
+    {
+      path: '/batchTasks',
+      component: '@/pages/BatchTasks/index',
+      title: 'BF',
+    },
     { path: '/register', component: '@/pages/register/index', title: 'BF' },
     { path: '/login', component: '@/pages/login/index', title: 'BF' },
   ],
@@ -24,5 +30,12 @@ export default defineConfig({
     statsFilename: 'stats.json',
     logLevel: 'info',
     defaultSizes: 'parsed',
+  },
+  chainWebpack: (config: any) => {
+    config.plugin("monaco-editor").use(new MonacoWebpackPlugin(), [
+      {
+        languages: ["java"],
+      },
+    ]);
   },
 });

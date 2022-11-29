@@ -28,6 +28,8 @@ specifiers:
   less-loader: ^10.2.0
   lint-staged: ^13.0.0
   mini-css-extract-plugin: ^2.6.0
+  monaco-editor: ^0.34.1
+  monaco-editor-webpack-plugin: ^7.0.1
   path: ^0.12.7
   postcss-loader: ^7.0.0
   prettier: ^2.6.2
@@ -35,6 +37,7 @@ specifiers:
   react-activation: ^0.11.2
   react-color: ^2.19.3
   react-dom: ^18.0.0
+  react-monaco-editor: ^0.51.0
   react-router-dom: ^6.3.0
   react-scripts: 5.0.0
   regenerator-runtime: ^0.13.9
@@ -56,11 +59,14 @@ dependencies:
   '@ant-design/icons': 4.7.0_biqbaboplfbrettd7655fr4n2y
   antd: 4.23.6_biqbaboplfbrettd7655fr4n2y
   axios: 0.26.1
+  monaco-editor: 0.34.1
+  monaco-editor-webpack-plugin: 7.0.1_iesprio75mojjpyh6goplpq74q
   prettier: 2.7.1
   react: 18.2.0
   react-activation: 0.11.2_react@18.2.0
   react-color: 2.19.3_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-monaco-editor: 0.51.0_36f7sbljymzebqfnfcq6tmizt4
   react-router-dom: 6.4.2_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.0_y4fwvlt4my7glyeaphwc4dhjya
   umi: 3.5.34
@@ -10275,6 +10281,21 @@ packages:
   /moment/2.29.4:
     resolution: {integrity: sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==}
 
+  /monaco-editor-webpack-plugin/7.0.1_iesprio75mojjpyh6goplpq74q:
+    resolution: {integrity: sha512-M8qIqizltrPlIbrb73cZdTWfU9sIsUVFvAZkL3KGjAHmVWEJ0hZKa/uad14JuOckc0GwnCaoGHvMoYtJjVyCzw==}
+    peerDependencies:
+      monaco-editor: '>= 0.31.0'
+      webpack: ^4.5.0 || 5.x
+    dependencies:
+      loader-utils: 2.0.2
+      monaco-editor: 0.34.1
+      webpack: 5.74.0_webpack-cli@4.10.0
+    dev: false
+
+  /monaco-editor/0.34.1:
+    resolution: {integrity: sha512-FKc80TyiMaruhJKKPz5SpJPIjL+dflGvz4CpuThaPMc94AyN7SeC9HQ8hrvaxX7EyHdJcUY5i4D0gNyJj1vSZQ==}
+    dev: false
+
   /mrmime/1.0.1:
     resolution: {integrity: sha512-hzzEagAgDyoU1Q6yg5uI+AorQgdvMCur3FcKf7NhMKWsaYg+RnbTyHRa/9IlLF9rf455MOCtcqqrQQ83pPP7Uw==}
     engines: {node: '>=10'}
@@ -12947,6 +12968,19 @@ packages:
   /react-lifecycles-compat/3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
     dev: true
+
+  /react-monaco-editor/0.51.0_36f7sbljymzebqfnfcq6tmizt4:
+    resolution: {integrity: sha512-6jx1V8p6gHVKJHFaTvicOtmlhFjOJhekobeNd92ZAo7F5UvAin1cF7bxWLCKgtxClYZ7CB3Ar284Kpbhj22FpQ==}
+    peerDependencies:
+      '@types/react': '>=17 <= 18'
+      monaco-editor: ^0.34.1
+      react: '>=17 <= 18'
+    dependencies:
+      '@types/react': 18.0.21
+      monaco-editor: 0.34.1
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
 
   /react-native-swipeout/2.3.6:
     resolution: {integrity: sha512-t9suUCspzck4vp2pWggWe0frS/QOtX6yYCawHnEes75A7dZCEE74bxX2A1bQzGH9cUMjq6xsdfC94RbiDKIkJg==}
