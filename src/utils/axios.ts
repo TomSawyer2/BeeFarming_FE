@@ -1,3 +1,4 @@
+import { message } from 'antd';
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
 const HTTP_STATUS_SUCCESS_CODE: Array<number> = [200];
@@ -7,26 +8,27 @@ const defaultConfig: AxiosRequestConfig = {
   headers: {
     'Content-type': 'application/json',
   },
-  baseURL: 'http://127.0.0.1:8082',
+  baseURL: 'https://bf.tomsawyer2.xyz',
 };
 
 interface responseData {
   data: Record<string, unknown>;
-  code: number;
+  status: number;
   msg: string;
 }
 const responseInterceptor = (response: AxiosResponse): responseData => {
   const { status, data } = response;
-  if (!HTTP_STATUS_SUCCESS_CODE.includes(status) || data.code !== 0) {
+  if (!HTTP_STATUS_SUCCESS_CODE.includes(status) || data.status !== 0) {
     throw data.msg;
   }
 
-  return data;
+    return data;
 };
 const commonErrorHander = (error: AxiosError) => {
   // @ts-ignore
   const response: AxiosResponse = error.response;
   if (response?.data?.msg) {
+    message.warning(response?.data?.msg);
     throw response.data.msg;
   } else {
     throw error;

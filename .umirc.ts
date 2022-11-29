@@ -15,6 +15,8 @@ export default defineConfig({
       component: '@/pages/BatchTasks/index',
       title: 'BF',
     },
+    { path: '/register', component: '@/pages/register/index', title: 'BF' },
+    { path: '/login', component: '@/pages/login/index', title: 'BF' },
   ],
   title: 'Python_QRCode',
   fastRefresh: {},
