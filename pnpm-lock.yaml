@@ -8,6 +8,7 @@ specifiers:
   '@types/react': ^18.0.10
   '@types/react-color': ^3.0.6
   '@types/react-dom': ^18.0.5
+  '@types/react-modal': ^3.13.1
   '@umijs/preset-react': 1.x
   add-asset-html-webpack-plugin: ^5.0.2
   antd: ^4.19.5
@@ -37,6 +38,7 @@ specifiers:
   react-activation: ^0.11.2
   react-color: ^2.19.3
   react-dom: ^18.0.0
+  react-modal: ^3.16.1
   react-monaco-editor: ^0.51.0
   react-router-dom: ^6.3.0
   react-scripts: 5.0.0
@@ -66,6 +68,7 @@ dependencies:
   react-activation: 0.11.2_react@18.2.0
   react-color: 2.19.3_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
+  react-modal: 3.16.1_biqbaboplfbrettd7655fr4n2y
   react-monaco-editor: 0.51.0_36f7sbljymzebqfnfcq6tmizt4
   react-router-dom: 6.4.2_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.0_y4fwvlt4my7glyeaphwc4dhjya
@@ -80,6 +83,7 @@ devDependencies:
   '@types/react': 18.0.21
   '@types/react-color': 3.0.6
   '@types/react-dom': 18.0.6
+  '@types/react-modal': 3.13.1
   '@umijs/preset-react': 1.8.31_ueaua7n2ns7ttk3shnvo6i6rde
   add-asset-html-webpack-plugin: 5.0.2_dseqt6curza6cwqlyc3eowsnru
   babel-core: 7.0.0-bridge.0_@babel+core@7.19.3
@@ -2870,6 +2874,12 @@ packages:
 
   /@types/react-helmet/6.1.5:
     resolution: {integrity: sha512-/ICuy7OHZxR0YCAZLNg9r7I9aijWUWvxaPR6uTuyxe8tAj5RL4Sw1+R6NhXUtOsarkGYPmaHdBDvuXh2DIN/uA==}
+    dependencies:
+      '@types/react': 18.0.21
+    dev: true
+
+  /@types/react-modal/3.13.1:
+    resolution: {integrity: sha512-iY/gPvTDIy6Z+37l+ibmrY+GTV4KQTHcCyR5FIytm182RQS69G5ps4PH2FxtC7bAQ2QRHXMevsBgck7IQruHNg==}
     dependencies:
       '@types/react': 18.0.21
     dev: true
@@ -7304,7 +7314,6 @@ packages:
 
   /exenv/1.2.2:
     resolution: {integrity: sha512-Z+ktTxTwv9ILfgKCk32OX3n/doe+OcLTRtqK9pcL+JsP3J1/VW8Uvl4ZjLlKqeW4rzK4oesDOGMEMRIZqtP4Iw==}
-    dev: true
 
   /exit/0.1.2:
     resolution: {integrity: sha512-Zk/eNKV2zbjpKzrsQ+n1G6poVbErQxJ0LBOJXaKZ1EViLzH+hrLu9cdXI4zw9dBQJslwBEpbQ2P1oS7nDxs6jQ==}
@@ -12967,7 +12976,21 @@ packages:
 
   /react-lifecycles-compat/3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
-    dev: true
+
+  /react-modal/3.16.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==}
+    engines: {node: '>=8'}
+    peerDependencies:
+      react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
+      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
+    dependencies:
+      exenv: 1.2.2
+      prop-types: 15.8.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-lifecycles-compat: 3.0.4
+      warning: 4.0.3
+    dev: false
 
   /react-monaco-editor/0.51.0_36f7sbljymzebqfnfcq6tmizt4:
     resolution: {integrity: sha512-6jx1V8p6gHVKJHFaTvicOtmlhFjOJhekobeNd92ZAo7F5UvAin1cF7bxWLCKgtxClYZ7CB3Ar284Kpbhj22FpQ==}

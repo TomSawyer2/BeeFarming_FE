@@ -17,9 +17,9 @@ const Page: React.FC = () => {
     try {
       const res = await login(user);
       console.log(res);
-      history.push('')
+      window.localStorage.setItem("token", res)
       message.success('登录成功!');
-      setTimeout(function () { history.push(''); }, 1000);
+      setTimeout(function () { history.push('/'); }, 1000);
     } catch (e) {
       console.log(e);
     }
