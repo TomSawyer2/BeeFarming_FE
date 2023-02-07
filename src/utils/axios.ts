@@ -3,13 +3,23 @@ import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } f
 
 const HTTP_STATUS_SUCCESS_CODE: Array<number> = [200];
 
+const getToken = () => {
+  if (!localStorage) {
+    return "";
+  }
+  const token = localStorage.getItem("token") || "";
+  return token;
+}
+
 const defaultConfig: AxiosRequestConfig = {
   timeout: 100 * 1000,
   headers: {
     'Content-type': 'application/json',
+    'Authorization': getToken()
   },
   baseURL: 'https://bf.tomsawyer2.xyz',
 };
+
 
 interface responseData {
   data: Record<string, unknown>;

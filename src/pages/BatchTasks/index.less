@@ -1,11 +1,103 @@
+.bt {
+  height: 100vh;
+  background-color: black;
+}
+
+.bt-top {
+  height: 45px;
+  color: white;
+}
+
 .bt-editor {
+  display: flex;
+  flex-flow: column wrap;
   height: 100%;
 }
 
-.bt-header {
-  height: 40px;
+.honeyA, .honeyB, .hornetA, .hornetB {
+  width: 40%;
+  position: relative;
+  height: 50%;
 }
 
-.bt {
+.settings{
+  width: 20%;
+  height: 100%;
+  background-color: #1e1e1e;
+  color: white;
+}
+
+.run {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+}
+// .check {
+//   z-index: 1;
+//   position: absolute;
+//   right: 70px;
+// }
+.upload {
+  z-index: 1;
+  position: absolute;
+  right: 0;
+}
+
+.st-header {
+  text-align: center;
+  font-size: large;
+}
+#basic {
+  margin-top: 85%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.ant-form-item-label > label {
+  color: white;
+}
+
+.ReactModalPortal {
+  margin-top: -100vh;
+  width: 100vw;
   height: 100vh;
+  z-index: 9997;
+}
+.overlay {
+  height: 100%;
+  background-color: transparent;
+  z-index: 9997;
+}
+.content {
+  background-color:transparent;
+  height: 100%;
+  z-index: 9997;
+}
+
+.bg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  background-color:rgba(255,255,255,0.6);  
+  height: 100vh;  
+  width: 100vw;                 
+  z-index: 9998;
+  // display: none;
+}
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 40vh;
+  width: 25vw;
+  border-radius: 5px;
+  background-color: #fff;
+  z-index: 9999;
+}
+
+.cancel {
+  margin-top: 1%;
+  background-color: #1890ff;
+  color: white;
 }

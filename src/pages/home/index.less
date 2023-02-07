@@ -3,6 +3,14 @@
   width: 100vw;
 }
 
+.mainbody {
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
+  align-items: center;
+  justify-content: space-around;
+}
+
 .bg {
   position: absolute;
   left: 0;
@@ -16,151 +24,3 @@
   z-index: -1;
 }
 
-.qr {
-  height: calc(100vh - 80px);
-  padding: 20px 0;
-  width: 100vw;
-  z-index: 20;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.qr-card {
-  margin: 0 16px;
-  height: 550px;
-  width: 500px;
-  position: relative;
-  max-width: 900px;
-  border-radius: 8px;
-  transition-property: all;
-  transition-duration: 0.3s;
-  transition-delay: 0s;
-  background-color: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.069);
-  &:hover {
-    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
-  }
-}
-
-.encode,
-.decode {
-  height: 100%;
-  padding: 30px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-}
-
-.encode-input {
-  border-radius: 8px;
-}
-
-.encode-img {
-  height: 300px;
-  width: 250px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-}
-
-.empty-img-box,
-.empty-img-box-upload {
-  border-radius: 8px;
-  border: 1px dashed #ccc;
-  height: 250px;
-  width: 250px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.empty-img-box-upload {
-  &:hover {
-    border: 1px dashed #1890ff;
-  }
-}
-
-.encode-btn,
-.decode-btn {
-  border-radius: 4px;
-  width: 100px;
-  height: 40px;
-  margin: 0 10px;
-}
-.encode-btn-text,
-.decode-btn-text {
-  font-size: 16px;
-}
-
-.img-box {
-  height: 250px;
-  width: 250px;
-  &:hover {
-    .encode-btn-re {
-      opacity: 1;
-    }
-  }
-}
-
-.image {
-  height: 250px;
-  width: 250px;
-  object-fit: contain;
-  border-radius: 8px;
-}
-
-.ant-upload.ant-upload-drag {
-  background: none;
-  border: none;
-}
-
-.mask-box {
-  &:hover {
-    .mask {
-      opacity: 1;
-    }
-  }
-}
-
-.mask {
-  position: absolute;
-  left: 0;
-  top: 16px;
-  opacity: 0;
-  width: 250px;
-  height: 250px;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 8px;
-  transition: cubic-bezier(0.075, 0.82, 0.165, 1) 0.3s;
-}
-
-.output-text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  -webkit-box-orient: vertical;
-  word-break: break-all;
-}
-
-.color-group {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  margin: 10px 0;
-}
-
-.color-box {
-  & > span {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-  }
-}
