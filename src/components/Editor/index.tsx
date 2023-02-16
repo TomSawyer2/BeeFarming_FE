@@ -1,8 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import { Tabs } from 'antd';
 import './index.less';
-const { TabPane } = Tabs;
 
 interface EditorProps {
   ref: any;
@@ -11,15 +9,19 @@ interface EditorProps {
 // eslint-disable-next-line react/display-name
 const Editor: React.FC<EditorProps> = forwardRef((props, ref) => {
   const [monaco, setMonaco] = useState<any>();
-  const [type, setType] = useState<string>('');
   useImperativeHandle(ref, () => ({
     getContent: (type: string) => {
-      switch(type) {
-        case 'honey-A': return monaco?.editor.getModels()[0].getValue();
-        case 'hornet-A': return monaco?.editor.getModels()[1].getValue();
-        case 'honey-B': return monaco?.editor.getModels()[2].getValue();
-        case 'hornet-B': return monaco?.editor.getModels()[3].getValue();
-        default: return 0;
+      switch (type) {
+        case 'honey-A':
+          return monaco?.editor.getModels()[0].getValue();
+        case 'hornet-A':
+          return monaco?.editor.getModels()[1].getValue();
+        case 'honey-B':
+          return monaco?.editor.getModels()[2].getValue();
+        case 'hornet-B':
+          return monaco?.editor.getModels()[3].getValue();
+        default:
+          return 0;
       }
     },
   }));
@@ -44,7 +46,6 @@ const Editor: React.FC<EditorProps> = forwardRef((props, ref) => {
         }}
         editorDidMount={(editor, monacoItem) => setMonaco(monacoItem)}
       />
-
     </div>
   );
 });

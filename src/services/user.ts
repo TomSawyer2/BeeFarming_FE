@@ -8,22 +8,25 @@ export interface RegisterParams {
 export type LoginParams = RegisterParams;
 
 export interface CodeParams {
-  content: string,
-  type: string,
-  codeId: number
+  content: string;
+  type: string;
+  codeId?: number;
 }
-export interface RunParams {
-  codeIdAHoney: number,
-  codeIdAHornet: number,
-  codeIdBHoney: number,
-  codeIdBHornet: number,
-  name: string,
-  totalRounds: number,
-  timeout: number
+
+export interface RunCodeParams {
+  codeIdAHoney: number;
+  codeIdAHornet: number;
+  codeIdBHoney: number;
+  codeIdBHornet: number;
+  name: string;
+  totalRounds: number;
+  timeout: number;
 }
-export interface ResParams {
+
+export interface CheckStatusParams {
   batchTaskId: number;
 }
+
 export interface PageParams {
   page: number;
   pageSize: number;
@@ -54,34 +57,34 @@ export async function uploadCode(params: CodeParams) {
 }
 
 //运行代码
-export async function runCode(params: RunParams) {
+export async function runCode(params: RunCodeParams) {
   const url = '/api/batchTasks/run';
 
   const { data } = await axios.post(url, params);
   return data;
 }
 
-//查询状态 
-export async function checkStatus(params: ResParams) {
+//查询状态
+export async function checkStatus(params: CheckStatusParams) {
   const url = '/api/batchTasks/status';
 
-  const { data } = await axios.get(url, {params});
+  const { data } = await axios.get(url, { params });
   return data;
 }
 
 //取消任务
-export async function stopTask(params: ResParams) {
+export async function stopTask(params: CheckStatusParams) {
   const url = '/api/batchTasks/stop';
 
-  const { data } = await axios.put(url, {params});
+  const { data } = await axios.put(url, { params });
   return data;
 }
 
 //查询结果
-export async function checkResult(params: ResParams) {
+export async function checkResult(params: CheckStatusParams) {
   const url = '/api/batchTasks/result';
 
-  const { data } = await axios.get(url, {params});
+  const { data } = await axios.get(url, { params });
   return data;
 }
 
@@ -89,6 +92,6 @@ export async function checkResult(params: ResParams) {
 export async function getHistory(params: PageParams) {
   const url = '/api/batchTasks/history';
 
-  const { data } = await axios.get(url, {params});
+  const { data } = await axios.get(url, { params });
   return data;
 }

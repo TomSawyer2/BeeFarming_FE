@@ -1,44 +1,60 @@
 import React, { useState } from 'react';
 import { history } from 'umi';
 import { Button, message, Input } from 'antd';
-import { register } from '@/services/user'
-
+import { register } from '@/services/user';
 
 import './index.less';
 
 const Page: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const user = {
-    username,
-    password
-  }
+
   const handleRegister = async () => {
     try {
-      const res = await register(user);
-      console.log(res);
-      
+      await register({
+        username,
+        password,
+      });
       message.success('注册成功！正在为您跳转');
-      setTimeout(function () { history.push(''); }, 1000);
+      setTimeout(() => {
+        history.push('');
+      }, 1000);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
-  }
+  };
+
   return (
     <div className="box">
       <form>
-        <h2>Sign up</h2>
+        <h2>注册</h2>
         <div className="inputBox">
-          <Input type="text" placeholder='Enter your username.' value={username} onChange={(e) => { setUsername(e.target.value) }} />
-          <span>UserName</span>
+          <Input
+            type="text"
+            placeholder="账户"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <span>账户</span>
           <i></i>
         </div>
         <div className="inputBox">
-          <Input type="password" placeholder='Enter your password.' value={password} onChange={(e) => { setPassword(e.target.value) }} />
-          <span>Password</span>
+          <Input
+            type="password"
+            placeholder="密码"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <span>密码</span>
           <i></i>
         </div>
-        <Button className="register-btn" value="Register" onClick={handleRegister}>Register</Button>
+        <Button
+          className="register-btn"
+          value="Register"
+          onClick={() => handleRegister()}
+        >
+          注册
+        </Button>
       </form>
     </div>
   );

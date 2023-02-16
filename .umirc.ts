@@ -19,7 +19,7 @@ export default defineConfig({
     { path: '/login', component: '@/pages/login/index', title: 'BF' },
     { path: '/history', component: '@/pages/history/index', title: 'BF' },
   ],
-  title: 'Python_QRCode',
+  title: 'BeeFarming Web',
   fastRefresh: {},
   mfsu: {},
   dynamicImport: {},
@@ -38,5 +38,8 @@ export default defineConfig({
         languages: ["java"],
       },
     ]);
+  },
+  antd: {
+    dark: true,
   },
 });

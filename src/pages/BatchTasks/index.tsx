@@ -1,91 +1,88 @@
 import Editor from '@/components/Editor';
-import { Button, Form, Input, message, Spin, Descriptions, Tabs } from 'antd';
+import { Button, Form, Input, message, Spin, Descriptions } from 'antd';
 import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
-import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user'
+import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
+import HeaderBar from '@/components/HeaderBar';
+import { CodeType } from '@/const/typings';
 
 import './index.less';
-import HeaderBar from '@/components/HeaderBar';
+
+interface BatchTaskConfig {
+  name: string;
+  totalRounds: number;
+  timeout: number;
+}
+
+interface CodeInfo {
+  codeId?: number;
+  type: CodeType;
+  content: string;
+}
 
 const BatchTasks: React.FC = () => {
   const editorRef = useRef(null);
   const [open, setOpen] = useState<boolean>(false);
   const [close, setClose] = useState<boolean>(true);
-  const [content, setContent] = useState<string>('');
-  const [type, setType] = useState<string>('');
-  const [codeId, setCodeId] = useState<number>();
-  const [code, setCode] = useState({
-    content,
-    type,
-    codeId
-  })
 
-  const [codeIdAHoney, setCodeIdAHoney] = useState<number>(165);
-  const [codeIdAHornet, setCodeIdAHornet] = useState<number>(166);
-  const [codeIdBHoney, setCodeIdBHoney] = useState<number>(167);
-  const [codeIdBHornet, setCodeIdBHornet] = useState<number>(168);
-  const [name, setName] = useState<string>('');
-  const [totalRounds, setTotalRounds] = useState<number>(2);
-  const [timeout, setTimeout] = useState<number>(10000);
-  const [run, setRun] = useState({
-    codeIdAHoney,
-    codeIdAHornet,
-    codeIdBHoney,
-    codeIdBHornet,
-    name,
-    totalRounds,
-    timeout
-  })
+  const [codeAHoney, setCodeAHoney] = useState<CodeInfo>({ type: 'honey-A' } as CodeInfo);
+  const [codeAHornet, setCodeAHornet] = useState<CodeInfo>({ type: 'hornet-A' } as CodeInfo);
+  const [codeBHoney, setCodeBHoney] = useState<CodeInfo>({ type: 'honey-B' } as CodeInfo);
+  const [codeBHornet, setCodeBHornet] = useState<CodeInfo>({ type: 'hornet-B' } as CodeInfo);
 
-  const [batchTaskId, setBatchTaskId] = useState<number>();
-  const [check, setCheck] = useState({
-    batchTaskId
-  })
+  const findCodeInfoByType = (type: CodeType) => {
+    switch (type) {
+      case 'honey-A':
+        return {
+          codeInfo: codeAHoney,
+          setCodeInfo: setCodeAHoney,
+        };
+      case 'honey-B':
+        return {
+          codeInfo: codeBHoney,
+          setCodeInfo: setCodeBHoney,
+        };
+      case 'hornet-A':
+        return {
+          codeInfo: codeAHornet,
+          setCodeInfo: setCodeAHornet,
+        };
+      case 'hornet-B':
+        return {
+          codeInfo: codeBHornet,
+          setCodeInfo: setCodeBHornet,
+        };
+    }
+  };
+
+  const [batchTaskId, setBatchTaskId] = useState<number>(0);
 
   const [upperGoals, setUpperGoals] = useState<string>('');
   const [lowerGoals, setLowerGoals] = useState<string>('');
-  const result = [
-    upperGoals,
-    lowerGoals
-  ]
+  const result = [upperGoals, lowerGoals];
 
-  const onFinish = (values: any) => {
-    run.name = values.name;
-    run.timeout = values.timeout;
-    run.totalRounds = values.totalRounds;
-    message.success('参数设置成功！')
-  };
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
-  };
-
-  const handleUpload = async (type: string) => {
+  const handleUpload = async (type: CodeType) => {
     try {
       // setCode({...code, content: editorRef.current?.getContent(type)});
-      code.content = editorRef.current?.getContent(type);
-      if (code.content == '') {
-        message.error('请先输入代码！')
+      // @ts-ignore
+      const content = editorRef.current?.getContent(type);
+      if (content === '') {
+        message.error('请先输入代码！');
+        return;
       }
-      else {
-        code.type = type;
-        const res = await uploadCode(code);
-        switch (type) {
-          case 'honey-A': run.codeIdAHoney = res.codeId;
-          case 'hornet-A': run.codeIdAHornet = res.codeId;
-          case 'honey-B': run.codeIdBHoney = res.codeId;
-          case 'hornet-B': run.codeIdBHornet = res.codeId;
-        }
-        message.success('上传成功！')
-      }
+      const { codeInfo, setCodeInfo } = findCodeInfoByType(type);
+      const codeId = codeInfo?.codeId || undefined;
+      const { codeId: newId } = await uploadCode({ type, codeId, content });
+      setCodeInfo({ type, codeId: newId, content });
+      message.success('上传成功！');
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
-  }
+  };
 
   const handleLoading = async () => {
     try {
-      const res = await checkStatus(check);
+      const res = await checkStatus({ batchTaskId });
       console.log(res);
       if (res.status === 2 || res.status === 3) {
         return false;
@@ -93,65 +90,68 @@ const BatchTasks: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
-  const handleRun = async () => {
+  const handleRun = async (values: BatchTaskConfig) => {
+    const { name, timeout = 1, totalRounds = 5 } = values;
     try {
-      if (run.codeIdAHoney == undefined || run.codeIdAHornet == undefined || run.codeIdBHoney == undefined || run.codeIdBHornet == undefined) {
+      if (
+        !codeAHoney?.codeId ||
+        !codeAHornet?.codeId ||
+        !codeBHoney?.codeId ||
+        !codeBHornet?.codeId
+      ) {
         message.error('请先上传代码！');
-      }
-      else if (run.timeout == undefined || run.totalRounds == undefined) {
-        message.error('请先配置参数！');
-      }
-      else {
-        const res = await runCode(run);
-        // setCheck({...check, batchTaskId: res.id});
-        check.batchTaskId = res.id;
+        return;
+      } else {
+        const runCodeParams = {
+          codeIdAHoney: codeAHoney?.codeId,
+          codeIdAHornet: codeAHornet?.codeId,
+          codeIdBHoney: codeBHoney?.codeId,
+          codeIdBHornet: codeBHornet?.codeId,
+          name,
+          totalRounds,
+          timeout,
+        };
+        const res = await runCode(runCodeParams);
+        setBatchTaskId(res.id);
+
         setOpen(true);
-        const interval = setInterval(async function () {
-          let a = await handleLoading();
-          console.log(check.batchTaskId);
-          if (a == false) {
+        const interval = setInterval(async () => {
+          const isProcessing = await handleLoading();
+          if (!isProcessing) {
             clearInterval(interval);
             setOpen(false);
             handleCheck();
             setClose(false);
           }
         }, 1000);
-        console.log(res);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
-  }
+  };
+
   const handleCancel = async () => {
     try {
-      // const res = await stopTask(check);
-      // console.log(res);
+      await stopTask({ batchTaskId });
       setOpen(false);
     } catch (e) {
-
+      console.error(e);
     }
-  }
-  const handleClose = async () => {
-    try {
-      // const res = await stopTask(check);
-      // console.log(res);
-      setClose(true);
-    } catch (e) {
+  };
 
-    }
-  }
   const handleCheck = async () => {
     try {
-      const res = await checkResult(check);
+      const res = await checkResult({ batchTaskId });
       console.log(res);
       setUpperGoals(res.upperGoals);
       setLowerGoals(res.lowerGoals);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
-  }
+  };
+
   return (
     <div className="bt">
       <Modal
@@ -160,10 +160,15 @@ const BatchTasks: React.FC = () => {
         className="content"
         ariaHideApp={false}
       >
-        <div className='bg'>
-          <div className='box'>
+        <div className="bg">
+          <div className="box">
             <Spin tip="Loading"></Spin>
-            <Button onClick={() => { handleCancel() }} className='cancel'>取消运行</Button>
+            <Button
+              onClick={() => handleCancel()}
+              className="cancel"
+            >
+              取消运行
+            </Button>
           </div>
         </div>
       </Modal>
@@ -173,59 +178,71 @@ const BatchTasks: React.FC = () => {
         className="content"
         ariaHideApp={false}
       >
-        <div className='bg'>
-          <div className='box'>
+        <div className="bg">
+          <div className="box">
             <Descriptions
               title="运行结果"
               bordered
-              column={1}>
+              column={1}
+            >
               <Descriptions.Item label="上半场">{upperGoals}</Descriptions.Item>
               <Descriptions.Item label="下半场">{lowerGoals}</Descriptions.Item>
-            </Descriptions>,
-            <Button type="primary" onClick={() => { handleClose() }}>
+            </Descriptions>
+            <Button
+              type="primary"
+              onClick={() => setClose(true)}
+            >
               关闭窗口
-            </Button>,
-            {/* <Button onClick={() => { handleClose() }} className='cancel'>关闭窗口</Button> */}
+            </Button>
           </div>
         </div>
       </Modal>
       <div className="bt-top">
-        <HeaderBar /> 
+        <HeaderBar />
         {/* <Button className="check" onClick={() => { handleCheck() }}>查看结果</Button> */}
       </div>
       <div className="bt-editor">
         <div className="honeyA">
           {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂A</div> */}
-          <Button className="upload" onClick={() => { handleUpload('honey-A') }}>上传</Button>
+          <Button
+            className="upload"
+            onClick={() => handleUpload('honey-A')}
+          >
+            上传
+          </Button>
           <Editor ref={editorRef} />
         </div>
         <div className="hornetA">
-        {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂A</div> */}
-          <Button className="upload" onClick={() => { handleUpload('hornet-A') }}>上传</Button>
+          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂A</div> */}
+          <Button
+            className="upload"
+            onClick={() => handleUpload('hornet-A')}
+          >
+            上传
+          </Button>
           <Editor ref={editorRef} />
         </div>
         <div className="settings">
-          <div className='st-header'>参数设置</div>
+          <div className="st-header">参数设置</div>
           <Form
             name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             initialValues={{ remember: true }}
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+            onFinish={handleRun}
             autoComplete="off"
           >
             <Form.Item
               label="任务名称"
               name="name"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: '请输入任务名称' }]}
             >
               <Input />
             </Form.Item>
             <Form.Item
               label="运行总轮数"
               name="totalRounds"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: '请输入运行总轮数' }]}
             >
               <Input />
             </Form.Item>
@@ -233,27 +250,40 @@ const BatchTasks: React.FC = () => {
             <Form.Item
               label="超时时间"
               name="timeout"
-              rules={[{ required: true }]}
+              rules={[{ required: true, message: '请输入超时时间' }]}
             >
               <Input />
             </Form.Item>
 
             <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-              <Button type="primary" htmlType="submit">
-                提交参数
+              <Button
+                className="run"
+                type="primary"
+                htmlType="submit"
+              >
+                运行
               </Button>
-              <Button className="run" type="primary" onClick={() => { handleRun() }}>运行</Button>
             </Form.Item>
           </Form>
         </div>
         <div className="honeyB">
-        {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂B</div> */}
-          <Button className="upload" onClick={() => { handleUpload('honey-B') }}>上传</Button>
+          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂B</div> */}
+          <Button
+            className="upload"
+            onClick={() => handleUpload('honey-B')}
+          >
+            上传
+          </Button>
           <Editor ref={editorRef} />
         </div>
         <div className="hornetB">
-        {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂B</div> */}
-          <Button className="upload" onClick={() => { handleUpload('hornet-B') }}>上传</Button>
+          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂B</div> */}
+          <Button
+            className="upload"
+            onClick={() => handleUpload('hornet-B')}
+          >
+            上传
+          </Button>
           <Editor ref={editorRef} />
         </div>
       </div>
