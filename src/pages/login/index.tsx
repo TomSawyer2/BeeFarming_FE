@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { history } from 'umi';
 import { Button, message, Input } from 'antd';
 import { login } from '@/services/user';
 
@@ -19,9 +18,7 @@ const Page: React.FC = () => {
       const token = await login(user);
       window.localStorage.setItem('token', token);
       message.success('登录成功!');
-      setTimeout(() => {
-        history.push('/batchTasks');
-      }, 1000);
+      window.location.pathname = '/batchTasks';
     } catch (e) {
       console.error(e);
     }

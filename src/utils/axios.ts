@@ -29,6 +29,7 @@ interface responseData {
 const responseInterceptor = (response: AxiosResponse): responseData => {
   const { status, data } = response;
   if (!HTTP_STATUS_SUCCESS_CODE.includes(status) || data.status !== 0) {
+    message.error(data.msg);
     throw data.msg;
   }
 
@@ -39,7 +40,7 @@ const commonErrorHander = (error: AxiosError) => {
   // @ts-ignore
   const response: AxiosResponse = error.response;
   if (response?.data?.msg) {
-    message.warning(response?.data?.msg);
+    message.error(response?.data?.msg);
     throw response.data.msg;
   } else {
     throw error;

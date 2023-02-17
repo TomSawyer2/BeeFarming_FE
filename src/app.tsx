@@ -14,7 +14,7 @@ export function onRouteChange({ location }) {
 export function rootContainer(container: any) {
   return (
     <div>
-      <HeaderBar />
+      {!whiteListUrl.includes(window.location.pathname) && <HeaderBar />}
       {container}
     </div>
   );
