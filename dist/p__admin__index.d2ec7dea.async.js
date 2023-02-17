@@ -1,1 +1,0 @@
-(self["webpackChunkBeeFarmingFE"]=self["webpackChunkBeeFarmingFE"]||[]).push([[8034],{62052:function(e,n,a){"use strict";a.r(n);a(50959);var i=a(11527),s=()=>(0,i.jsx)("div",{children:(0,i.jsx)("span",{children:"admin"})});n["default"]=s}}]);
