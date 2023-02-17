@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import { Button } from 'antd';
 import { getHistory } from '@/services/user';
 
-import HeaderBar from '@/components/HeaderBar';
-
 import './index.less';
 
 const History: React.FC = () => {
@@ -24,9 +22,6 @@ const History: React.FC = () => {
   };
   return (
     <div className="container">
-      <div className="bt-top">
-        <HeaderBar />
-      </div>
       <Button
         onClick={() => {
           handleHistory();
@@ -34,7 +29,6 @@ const History: React.FC = () => {
       >
         Test
       </Button>
-      <div className="bg" />
     </div>
   );
 };

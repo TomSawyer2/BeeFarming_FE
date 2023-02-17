@@ -1,36 +1,43 @@
 .bt {
-  height: 100vh;
   background-color: black;
-}
-
-.bt-top {
-  height: 45px;
-  color: white;
 }
 
 .bt-editor {
   display: flex;
-  flex-flow: column wrap;
-  height: 100%;
+  flex-direction: row;
+  height: calc(100vh - 46px);
 }
 
-.honeyA, .honeyB, .hornetA, .hornetB {
-  width: 40%;
+.honeyA,
+.honeyB,
+.hornetA,
+.hornetB {
+  width: 100%;
   position: relative;
-  height: 50%;
+  height: calc((100vh - 46px - 23px) / 2);
 }
 
-.settings{
-  width: 20%;
+.settings {
+  width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   background-color: #1e1e1e;
   color: white;
 }
 
-.run {
-  z-index: 1;
-  position: absolute;
-  right: 0;
+.runBtn {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  // 黑金边框
+  border: 1px solid #ff8928;
+  background-color: black;
+  &:hover {
+    background-color: #ff8928 !important;
+  }
 }
 // .check {
 //   z-index: 1;
@@ -46,12 +53,16 @@
 .st-header {
   text-align: center;
   font-size: large;
+  margin: 20px;
 }
-#basic {
-  margin-top: 85%;
-  margin-left: 5%;
-  margin-right: 5%;
+
+.batchTask-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 .ant-form-item-label > label {
   color: white;
 }
@@ -62,28 +73,19 @@
   height: 100vh;
   z-index: 9997;
 }
+
 .overlay {
   height: 100%;
   background-color: transparent;
   z-index: 9997;
 }
+
 .content {
-  background-color:transparent;
+  background-color: transparent;
   height: 100%;
   z-index: 9997;
 }
 
-.bg {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  background-color:rgba(255,255,255,0.6);  
-  height: 100vh;  
-  width: 100vw;                 
-  z-index: 9998;
-  // display: none;
-}
 .box {
   display: flex;
   align-items: center;
@@ -100,4 +102,19 @@
   margin-top: 1%;
   background-color: #1890ff;
   color: white;
+}
+
+.bt-editor-left,
+.bt-editor-right {
+  height: calc(100vh - 46px);
+  width: 100%;
+}
+
+.tooltip {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  & > span {
+    color: white;
+  }
 }

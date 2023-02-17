@@ -9,7 +9,6 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
-    { path: '/', component: '@/pages/home/index', title: 'BF' },
     {
       path: '/batchTasks',
       component: '@/pages/batchTasks/index',
@@ -18,6 +17,7 @@ export default defineConfig({
     { path: '/register', component: '@/pages/register/index', title: '注册' },
     { path: '/login', component: '@/pages/login/index', title: '登录' },
     { path: '/history', component: '@/pages/history/index', title: '历史记录' },
+    { path: '/admin', component: '@/pages/admin/index', title: '管理员' },
   ],
   title: 'BeeFarming Web',
   fastRefresh: {},

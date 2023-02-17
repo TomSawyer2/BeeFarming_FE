@@ -20,7 +20,7 @@ const Page: React.FC = () => {
       window.localStorage.setItem('token', token);
       message.success('登录成功!');
       setTimeout(() => {
-        history.push('/');
+        history.push('/batchTasks');
       }, 1000);
     } catch (e) {
       console.error(e);

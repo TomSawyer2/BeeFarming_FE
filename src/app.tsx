@@ -1,4 +1,6 @@
 import { history } from 'umi';
+import HeaderBar from '@/components/HeaderBar';
+import React from 'react';
 
 const whiteListUrl = ['/login', '/register'];
 
@@ -7,4 +9,13 @@ export function onRouteChange({ location }) {
   if (!whiteListUrl.includes(location.pathname) && !window.localStorage.getItem('token')) {
     history.push('/login');
   }
+}
+
+export function rootContainer(container: any) {
+  return (
+    <div>
+      <HeaderBar />
+      {container}
+    </div>
+  );
 }

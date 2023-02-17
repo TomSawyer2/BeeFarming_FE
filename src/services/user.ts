@@ -1,3 +1,4 @@
+import { UserPermission, UserStatus } from '@/const/typings';
 import axios from '@/utils/axios';
 
 export interface RegisterParams {
@@ -30,6 +31,14 @@ export interface CheckStatusParams {
 export interface PageParams {
   page: number;
   pageSize: number;
+}
+
+export interface UserInfo {
+  id: number;
+  username: string;
+  permission: UserPermission;
+  status: UserStatus;
+  batchTaskId?: number;
 }
 
 // 注册
@@ -93,5 +102,13 @@ export async function getHistory(params: PageParams) {
   const url = '/api/batchTasks/history';
 
   const { data } = await axios.get(url, { params });
+  return data;
+}
+
+// 获取用户信息
+export async function getUserInfo() {
+  const url = '/api/userInfo';
+
+  const { data } = await axios.get(url);
   return data;
 }

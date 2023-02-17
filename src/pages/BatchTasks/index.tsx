@@ -3,7 +3,6 @@ import { Button, Form, Input, message, Spin, Descriptions } from 'antd';
 import React, { useRef, useState } from 'react';
 import Modal from 'react-modal';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
-import HeaderBar from '@/components/HeaderBar';
 import { CodeType } from '@/const/typings';
 
 import './index.less';
@@ -79,9 +78,9 @@ const BatchTasks: React.FC = () => {
     }
   };
 
-  const handleLoading = async () => {
+  const handleLoading = async (taskId: number) => {
     try {
-      const res = await checkStatus({ batchTaskId });
+      const res = await checkStatus({ batchTaskId: taskId });
       console.log(res);
       if (res.status === 2 || res.status === 3) {
         return false;
@@ -114,14 +113,15 @@ const BatchTasks: React.FC = () => {
         };
         const res = await runCode(runCodeParams);
         setBatchTaskId(res.id);
+        const taskId = res.id;
 
         setOpen(true);
         const interval = setInterval(async () => {
-          const isProcessing = await handleLoading();
+          const isProcessing = await handleLoading(taskId);
           if (!isProcessing) {
             clearInterval(interval);
             setOpen(false);
-            await handleCheck();
+            await handleCheck(taskId);
             setClose(false);
           }
         }, 1000);
@@ -140,9 +140,9 @@ const BatchTasks: React.FC = () => {
     }
   };
 
-  const handleCheck = async () => {
+  const handleCheck = async (taskId: number) => {
     try {
-      const res = await checkResult({ batchTaskId });
+      const res = await checkResult({ batchTaskId: taskId });
       console.log(res);
       setUpperGoals(res.upperGoals);
       setLowerGoals(res.lowerGoals);
@@ -196,40 +196,42 @@ const BatchTasks: React.FC = () => {
           </div>
         </div>
       </Modal>
-      <div className="bt-top">
-        <HeaderBar />
-        {/* <Button className="check" onClick={() => { handleCheck() }}>查看结果</Button> */}
-      </div>
       <div className="bt-editor">
-        <div className="honeyA">
-          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂A</div> */}
-          <Button
-            className="upload"
-            onClick={() => handleUpload('honey-A')}
-          >
-            上传
-          </Button>
-          <Editor ref={editorRef} />
+        <div className="bt-editor-left">
+          <div className="honeyA">
+            <Button
+              className="upload"
+              onClick={() => handleUpload('honey-A')}
+            >
+              上传
+            </Button>
+            <Editor ref={editorRef} />
+          </div>
+          <div className="tooltip">
+            <span>玩家A蜜蜂代码</span>
+            <span>玩家A黄蜂代码</span>
+          </div>
+          <div className="hornetA">
+            {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂A</div> */}
+            <Button
+              className="upload"
+              onClick={() => handleUpload('hornet-A')}
+            >
+              上传
+            </Button>
+            <Editor ref={editorRef} />
+          </div>
         </div>
-        <div className="hornetA">
-          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂A</div> */}
-          <Button
-            className="upload"
-            onClick={() => handleUpload('hornet-A')}
-          >
-            上传
-          </Button>
-          <Editor ref={editorRef} />
-        </div>
+
         <div className="settings">
           <div className="st-header">参数设置</div>
           <Form
-            name="basic"
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ remember: true }}
+            initialValues={{ remember: true, timeout: 1, totalRounds: 5, name: '一次新的任务' }}
             onFinish={handleRun}
             autoComplete="off"
+            className="batchTask-form"
           >
             <Form.Item
               label="任务名称"
@@ -238,6 +240,7 @@ const BatchTasks: React.FC = () => {
             >
               <Input />
             </Form.Item>
+
             <Form.Item
               label="运行总轮数"
               name="totalRounds"
@@ -254,9 +257,12 @@ const BatchTasks: React.FC = () => {
               <Input />
             </Form.Item>
 
-            <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+            <Form.Item
+              wrapperCol={{ offset: 8, span: 16 }}
+              noStyle
+            >
               <Button
-                className="run"
+                className="runBtn"
                 type="primary"
                 htmlType="submit"
               >
@@ -265,25 +271,31 @@ const BatchTasks: React.FC = () => {
             </Form.Item>
           </Form>
         </div>
-        <div className="honeyB">
-          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂B</div> */}
-          <Button
-            className="upload"
-            onClick={() => handleUpload('honey-B')}
-          >
-            上传
-          </Button>
-          <Editor ref={editorRef} />
-        </div>
-        <div className="hornetB">
-          {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂B</div> */}
-          <Button
-            className="upload"
-            onClick={() => handleUpload('hornet-B')}
-          >
-            上传
-          </Button>
-          <Editor ref={editorRef} />
+
+        <div className="bt-editor-right">
+          <div className="honeyB">
+            {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂B</div> */}
+            <Button
+              className="upload"
+              onClick={() => handleUpload('honey-B')}
+            >
+              上传
+            </Button>
+            <Editor ref={editorRef} />
+          </div>
+          <div className="tooltip">
+            <span>玩家B蜜蜂代码</span>
+            <span>玩家B黄蜂代码</span>
+          </div>
+          <div className="hornetB">
+            <Button
+              className="upload"
+              onClick={() => handleUpload('hornet-B')}
+            >
+              上传
+            </Button>
+            <Editor ref={editorRef} />
+          </div>
         </div>
       </div>
     </div>
