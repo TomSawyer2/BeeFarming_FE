@@ -17,9 +17,12 @@
     "react-monaco-editor": "^0.51.0",
     "react-router-dom": "^6.4.2",
     "react-scripts": "5.0.0",
+    "register-service-worker": "^1.7.2",
     "umi": "^3.5.37",
     "web-vitals": "^2.1.4",
-    "webpack-merge": "^5.8.0"
+    "webpack-merge": "^5.8.0",
+    "workbox-precaching": "^6.5.4",
+    "workbox-webpack-plugin": "^6.5.4"
   },
   "scripts": {
     "dev": "umi dev",

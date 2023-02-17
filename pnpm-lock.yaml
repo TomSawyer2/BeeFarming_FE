@@ -43,6 +43,7 @@ specifiers:
   react-router-dom: ^6.4.2
   react-scripts: 5.0.0
   regenerator-runtime: ^0.13.10
+  register-service-worker: ^1.7.2
   sass-loader: ^10.3.1
   style-loader: ^3.3.1
   ts-loader: ^9.4.1
@@ -56,6 +57,8 @@ specifiers:
   webpack-manifest-plugin: ^5.0.0
   webpack-merge: ^5.8.0
   webpack-nano: ^1.1.1
+  workbox-precaching: ^6.5.4
+  workbox-webpack-plugin: ^6.5.4
 
 dependencies:
   '@ant-design/icons': 4.7.0_biqbaboplfbrettd7655fr4n2y
@@ -72,9 +75,12 @@ dependencies:
   react-monaco-editor: 0.51.0_36f7sbljymzebqfnfcq6tmizt4
   react-router-dom: 6.4.2_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.0_y4fwvlt4my7glyeaphwc4dhjya
+  register-service-worker: 1.7.2
   umi: 3.5.37
   web-vitals: 2.1.4
   webpack-merge: 5.8.0
+  workbox-precaching: 6.5.4
+  workbox-webpack-plugin: 6.5.4_webpack@5.74.0
 
 devDependencies:
   '@babel/core': 7.19.3
@@ -14064,6 +14070,10 @@ packages:
       unicode-match-property-value-ecmascript: 2.0.0
     dev: false
 
+  /register-service-worker/1.7.2:
+    resolution: {integrity: sha512-CiD3ZSanZqcMPRhtfct5K9f7i3OLCcBBWsJjLh1gW9RO/nS94sVzY59iS+fgYBOBqaBpf4EzfqUF3j9IG+xo8A==}
+    dev: false
+
   /regjsgen/0.2.0:
     resolution: {integrity: sha512-x+Y3yA24uF68m5GA+tBjbGYo64xXVJpbToBaWCoSNSc1hdk6dfctaRWrNFTVJZIIhL5GxW8zwjoixbnifnK59g==}
     dev: true
@@ -14396,6 +14406,7 @@ packages:
 
   /rollup-plugin-terser/7.0.2_rollup@2.79.1:
     resolution: {integrity: sha512-w3iIaU4OxcF52UUXiZNsNeuXIMDvFrr+ZXK6bFZ0Q60qyVfq4uLptoS4bbq3paG3x216eQllFZX7zt6TIImguQ==}
+    deprecated: This package has been deprecated and is no longer maintained. Please use @rollup/plugin-terser
     peerDependencies:
       rollup: ^2.0.0
     dependencies:
@@ -14917,6 +14928,7 @@ packages:
 
   /sourcemap-codec/1.4.8:
     resolution: {integrity: sha512-9NykojV5Uih4lgo5So5dtw+f0JgJX30KCNI8gwhz2J9A15wD0Ml6tjHKwf6fTSa6fAdVBdZeNOs9eJ71qCk8vA==}
+    deprecated: Please use @jridgewell/sourcemap-codec instead
     dev: false
 
   /spdx-correct/3.1.1:
