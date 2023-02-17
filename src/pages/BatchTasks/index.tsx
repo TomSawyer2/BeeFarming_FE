@@ -63,7 +63,6 @@ const BatchTasks: React.FC = () => {
 
   const handleUpload = async (type: CodeType) => {
     try {
-      // setCode({...code, content: editorRef.current?.getContent(type)});
       // @ts-ignore
       const content = editorRef.current?.getContent(type);
       if (content === '') {
@@ -122,7 +121,7 @@ const BatchTasks: React.FC = () => {
           if (!isProcessing) {
             clearInterval(interval);
             setOpen(false);
-            handleCheck();
+            await handleCheck();
             setClose(false);
           }
         }, 1000);

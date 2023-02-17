@@ -8,8 +8,8 @@ insert_final_newline = true
 
 [**.{js,ts,tsx,jsx,less,css,scss,py}]
 indent_style = space
-indent_size = 4
-tab_size = 4
+indent_size = 2
+tab_size = 2
 
 [*.md]
 trim_trailing_whitespace = false

@@ -48,7 +48,7 @@ export async function login(params: LoginParams) {
   return data;
 }
 
-//上传代码
+// 上传代码
 export async function uploadCode(params: CodeParams) {
   const url = '/api/batchTasks/uploadCodeForBatchTasks';
 
@@ -56,7 +56,7 @@ export async function uploadCode(params: CodeParams) {
   return data;
 }
 
-//运行代码
+// 运行代码
 export async function runCode(params: RunCodeParams) {
   const url = '/api/batchTasks/run';
 
@@ -64,7 +64,7 @@ export async function runCode(params: RunCodeParams) {
   return data;
 }
 
-//查询状态
+// 查询状态
 export async function checkStatus(params: CheckStatusParams) {
   const url = '/api/batchTasks/status';
 
@@ -72,7 +72,7 @@ export async function checkStatus(params: CheckStatusParams) {
   return data;
 }
 
-//取消任务
+// 取消任务
 export async function stopTask(params: CheckStatusParams) {
   const url = '/api/batchTasks/stop';
 
@@ -80,7 +80,7 @@ export async function stopTask(params: CheckStatusParams) {
   return data;
 }
 
-//查询结果
+// 查询结果
 export async function checkResult(params: CheckStatusParams) {
   const url = '/api/batchTasks/result';
 
@@ -88,7 +88,7 @@ export async function checkResult(params: CheckStatusParams) {
   return data;
 }
 
-//获取历史记录
+// 获取历史记录
 export async function getHistory(params: PageParams) {
   const url = '/api/batchTasks/history';
 
