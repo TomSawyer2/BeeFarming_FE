@@ -34,6 +34,7 @@ const Page: React.FC = () => {
               type="text"
               placeholder="账户"
               value={username}
+              autoComplete="off"
               onChange={(e) => setUsername(e.target.value)}
             />
             <span>账户</span>
@@ -44,6 +45,7 @@ const Page: React.FC = () => {
               type="password"
               placeholder="密码"
               value={password}
+              autoComplete="off"
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
