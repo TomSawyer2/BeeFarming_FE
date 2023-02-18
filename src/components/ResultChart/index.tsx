@@ -112,8 +112,8 @@ const ResultChart = (props: IProps) => {
   ];
 
   // 计算胜率
-  const winRateA = `${(winnersA / upperFinalGoals.length) * 100}%`;
-  const winRateB = `${(winnersB / upperFinalGoals.length) * 100}%`;
+  const winRateA = `${((winnersA / upperFinalGoals.length) * 100).toFixed(2)}%`;
+  const winRateB = `${((winnersB / upperFinalGoals.length) * 100).toFixed(2)}%`;
 
   return (
     <div className={styles.box}>
