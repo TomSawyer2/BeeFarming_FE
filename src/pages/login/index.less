@@ -1,31 +1,21 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  flex-direction: column;
+  background: #23242a;
+}
+
 .box {
+  position: relative;
+  width: 380px;
+  height: 420px;
+  background: #1c1c1c;
+  border-radius: 8px;
+  overflow: hidden;
 
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
-  }
-
-  body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    flex-direction: column;
-    background: #23242a;
-  }
-
-  .box {
-    position: relative;
-    width: 380px;
-    height: 420px;
-    background: #1c1c1c;
-    border-radius: 8px;
-    overflow: hidden;
-  }
-
-  .box::before {
+  &::before {
     content: '';
     z-index: 1;
     position: absolute;
@@ -38,7 +28,7 @@
     animation: animate 6s linear infinite;
   }
 
-  .box::after {
+  &::after {
     content: '';
     z-index: 1;
     position: absolute;
@@ -116,8 +106,8 @@
     transition: 0.5s;
   }
 
-  .inputBox input:valid~span,
-  .inputBox input:focus~span {
+  .inputBox input:valid ~ span,
+  .inputBox input:focus ~ span {
     color: #45f3ff;
     transform: translateX(0px) translateY(-34px);
     font-size: 0.75em;
@@ -137,8 +127,8 @@
     z-index: 9;
   }
 
-  .inputBox input:valid~i,
-  .inputBox input:focus~i {
+  .inputBox input:valid ~ i,
+  .inputBox input:focus ~ i {
     height: 44px;
   }
 

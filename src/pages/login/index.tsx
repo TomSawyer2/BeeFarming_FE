@@ -25,41 +25,43 @@ const Page: React.FC = () => {
   };
 
   return (
-    <div className="box">
-      <form>
-        <h2>登录</h2>
-        <div className="inputBox">
-          <Input
-            type="text"
-            placeholder="账户"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-          <span>账户</span>
-          <i></i>
-        </div>
-        <div className="inputBox">
-          <Input
-            type="password"
-            placeholder="密码"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-          />
-          <span>密码</span>
-          <i></i>
-        </div>
-        <div className="links">
-          <Link to={{ pathname: '/register' }}>注册</Link>
-        </div>
-        <Button
-          className="login-btn"
-          onClick={() => handleLogin()}
-        >
-          登录
-        </Button>
-      </form>
+    <div className="container">
+      <div className="box">
+        <form>
+          <h2>登录</h2>
+          <div className="inputBox">
+            <Input
+              type="text"
+              placeholder="账户"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <span>账户</span>
+            <i></i>
+          </div>
+          <div className="inputBox">
+            <Input
+              type="password"
+              placeholder="密码"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <span>密码</span>
+            <i></i>
+          </div>
+          <div className="links">
+            <Link to={{ pathname: '/register' }}>注册</Link>
+          </div>
+          <Button
+            className="login-btn"
+            onClick={() => handleLogin()}
+          >
+            登录
+          </Button>
+        </form>
+      </div>
     </div>
   );
 };
