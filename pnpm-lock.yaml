@@ -20,6 +20,7 @@ specifiers:
   babel-preset-react: ^6.24.1
   babel-preset-stage-0: ^6.24.1
   css-loader: ^6.7.1
+  dayjs: ^1.11.7
   eslint: ^8.25.0
   eslint-config-prettier: ^8.5.0
   eslint-plugin-prettier: ^4.2.1
@@ -64,6 +65,7 @@ dependencies:
   '@ant-design/icons': 4.7.0_biqbaboplfbrettd7655fr4n2y
   antd: 5.2.1_biqbaboplfbrettd7655fr4n2y
   axios: 0.26.1
+  dayjs: 1.11.7
   monaco-editor: 0.34.1
   monaco-editor-webpack-plugin: 7.0.1_iesprio75mojjpyh6goplpq74q
   prettier: 2.7.1
@@ -4244,7 +4246,7 @@ packages:
       '@rc-component/tour': 1.6.0_biqbaboplfbrettd7655fr4n2y
       classnames: 2.3.2
       copy-to-clipboard: 3.3.2
-      dayjs: 1.11.5
+      dayjs: 1.11.7
       qrcode.react: 3.1.0_react@18.2.0
       rc-cascader: 3.8.0_biqbaboplfbrettd7655fr4n2y
       rc-checkbox: 2.3.2_biqbaboplfbrettd7655fr4n2y
@@ -4261,7 +4263,7 @@ packages:
       rc-motion: 2.6.2_biqbaboplfbrettd7655fr4n2y
       rc-notification: 5.0.2_biqbaboplfbrettd7655fr4n2y
       rc-pagination: 3.2.0_biqbaboplfbrettd7655fr4n2y
-      rc-picker: 3.1.5_cgitjz73zezuu2blrtaxijn4d4
+      rc-picker: 3.1.5_mlnkrlbros4rghcauwy625gk7y
       rc-progress: 3.4.1_biqbaboplfbrettd7655fr4n2y
       rc-rate: 2.9.2_biqbaboplfbrettd7655fr4n2y
       rc-resize-observer: 1.2.0_biqbaboplfbrettd7655fr4n2y
@@ -6578,8 +6580,8 @@ packages:
     engines: {node: '>=0.11'}
     dev: true
 
-  /dayjs/1.11.5:
-    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+  /dayjs/1.11.7:
+    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -12927,7 +12929,7 @@ packages:
       '@babel/runtime': 7.20.13
       classnames: 2.3.2
       date-fns: 2.29.3
-      dayjs: 1.11.5
+      dayjs: 1.11.7
       moment: 2.29.4
       rc-trigger: 5.3.4_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.27.2_biqbaboplfbrettd7655fr4n2y
@@ -12936,7 +12938,7 @@ packages:
       shallowequal: 1.1.0
     dev: true
 
-  /rc-picker/3.1.5_cgitjz73zezuu2blrtaxijn4d4:
+  /rc-picker/3.1.5_mlnkrlbros4rghcauwy625gk7y:
     resolution: {integrity: sha512-Hh3ml+u+5mxLfl4ahVWlRGiX5+0EJrALR6tSW9yP0eea+6j+YjvjfetbvuVidViMDMweZa38dr8HTfAFLG6GFw==}
     engines: {node: '>=8.x'}
     peerDependencies:
@@ -12955,7 +12957,7 @@ packages:
     dependencies:
       '@babel/runtime': 7.20.13
       classnames: 2.3.2
-      dayjs: 1.11.5
+      dayjs: 1.11.7
       rc-trigger: 5.3.4_biqbaboplfbrettd7655fr4n2y
       rc-util: 5.27.2_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0

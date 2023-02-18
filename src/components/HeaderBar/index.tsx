@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Menu } from 'antd';
 import { history } from 'umi';
 import './index.less';
-import { UserInfo, getUserInfo } from '@/services/user';
 import { UserPermission } from '@/const/typings';
+import { UserInfoContextProps, userInfoContext } from '@/const/context';
 
 const HeaderBar: React.FC = () => {
   const [currentKey, setCurrentKey] = useState<string>('1');
-  const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
+  const { userInfo } = useContext<UserInfoContextProps>(userInfoContext);
 
   const handleMenuClick = (e: { key: string }) => {
     const { key } = e;
@@ -37,19 +37,6 @@ const HeaderBar: React.FC = () => {
       setCurrentKey('3');
     }
   }, [window.location.pathname]);
-
-  useEffect(() => {
-    fetchUserInfo();
-  }, []);
-
-  const fetchUserInfo = useCallback(async () => {
-    try {
-      const res = await getUserInfo();
-      setUserInfo(res);
-    } catch (error) {
-      console.error(error);
-    }
-  }, [localStorage.getItem('token')]);
 
   return (
     <div className="navbar">

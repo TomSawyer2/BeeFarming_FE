@@ -6,6 +6,7 @@
     "@ant-design/icons": "^4.7.0",
     "antd": "^5.2.1",
     "axios": "^0.26.1",
+    "dayjs": "^1.11.7",
     "monaco-editor": "^0.34.1",
     "monaco-editor-webpack-plugin": "^7.0.1",
     "prettier": "^2.7.1",
