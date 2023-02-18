@@ -164,7 +164,7 @@ const BatchTasks: React.FC = () => {
   };
 
   useEffect(() => {
-    if (userInfo.status === UserStatus.Running) {
+    if (userInfo.status === UserStatus.Running && userInfo.batchTaskId !== null) {
       const taskId = userInfo.batchTaskId!;
       setBatchTaskId(taskId);
       setOpen(true);
