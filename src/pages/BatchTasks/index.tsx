@@ -1,13 +1,14 @@
 import Editor from '@/components/Editor';
 import { Button, Form, Input, message, Spin } from 'antd';
-import React, { useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
-import { BatchTaskStatus, CodeType } from '@/const/typings';
+import { BatchTaskStatus, CodeType, UserStatus } from '@/const/typings';
 import { Modal } from 'antd';
 import ResultChart from '@/components/ResultChart';
 import { createPortal } from 'react-dom';
 
 import './index.less';
+import { userInfoContext, UserInfoContextProps } from '@/const/context';
 
 interface BatchTaskConfig {
   name: string;
@@ -29,6 +30,8 @@ const BatchTasks: React.FC = () => {
   const [codeAHornet, setCodeAHornet] = useState<CodeInfo>({ type: 'hornet-A' } as CodeInfo);
   const [codeBHoney, setCodeBHoney] = useState<CodeInfo>({ type: 'honey-B' } as CodeInfo);
   const [codeBHornet, setCodeBHornet] = useState<CodeInfo>({ type: 'hornet-B' } as CodeInfo);
+
+  const { userInfo } = useContext<UserInfoContextProps>(userInfoContext);
 
   const findCodeInfoByType = (type: CodeType) => {
     switch (type) {
@@ -160,6 +163,22 @@ const BatchTasks: React.FC = () => {
     });
   };
 
+  useEffect(() => {
+    if (userInfo.status === UserStatus.Running) {
+      const taskId = userInfo.batchTaskId!;
+      setBatchTaskId(taskId);
+      setOpen(true);
+      const interval = setInterval(async () => {
+        const isProcessing = await handleLoading(taskId);
+        if (!isProcessing) {
+          clearInterval(interval);
+          setOpen(false);
+          await handleCheck(taskId);
+        }
+      }, 1000);
+    }
+  }, []);
+
   return (
     <div className="bt">
       {open &&
@@ -190,8 +209,8 @@ const BatchTasks: React.FC = () => {
             <Editor ref={editorRef} />
           </div>
           <div className="tooltip">
-            <span>玩家A蜜蜂代码</span>
-            <span>玩家A黄蜂代码</span>
+            <span>玩家A蜜蜂代码↑</span>
+            <span>玩家A黄蜂代码↓</span>
           </div>
           <div className="hornetA">
             {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂A</div> */}
@@ -224,7 +243,7 @@ const BatchTasks: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-              label="运行总轮数"
+              label="运行轮数"
               name="totalRounds"
               rules={[{ required: true, message: '请输入运行总轮数' }]}
             >
@@ -266,8 +285,8 @@ const BatchTasks: React.FC = () => {
             <Editor ref={editorRef} />
           </div>
           <div className="tooltip">
-            <span>玩家B蜜蜂代码</span>
-            <span>玩家B黄蜂代码</span>
+            <span>玩家B蜜蜂代码↑</span>
+            <span>玩家B黄蜂代码↓</span>
           </div>
           <div className="hornetB">
             <Button
