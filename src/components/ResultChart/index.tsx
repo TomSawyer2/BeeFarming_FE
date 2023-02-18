@@ -122,7 +122,7 @@ const ResultChart = (props: IProps) => {
           name="比赛总结果"
           data={pieChartData}
         />
-        {draw !== upperFinalGoals.length ? (
+        {draw !== upperFinalGoals.length && winnersA !== winnersB ? (
           <span className={styles.result_text}>
             <span>玩家{winnersA > winnersB ? 'A' : 'B'}</span>以
             {winnersA > winnersB ? winRateA : winRateB}胜率获得了胜利
