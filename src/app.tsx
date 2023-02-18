@@ -18,12 +18,14 @@ export function onRouteChange({ location }) {
 const PermissionWrapper = (props: any) => {
   const [userInfo, setUserInfo] = useState<UserInfo>({} as UserInfo);
   const [initialLizing, setInitialLizing] = useState<boolean>(true);
+
   useEffect(() => {
     fetchUserInfo();
   }, []);
 
   const fetchUserInfo = useCallback(async () => {
     try {
+      setInitialLizing(true);
       const res = await getUserInfo();
       setUserInfo(res);
     } catch (error) {

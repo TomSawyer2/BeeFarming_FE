@@ -31,7 +31,7 @@ const BatchTasks: React.FC = () => {
   const [codeBHoney, setCodeBHoney] = useState<CodeInfo>({ type: 'honey-B' } as CodeInfo);
   const [codeBHornet, setCodeBHornet] = useState<CodeInfo>({ type: 'hornet-B' } as CodeInfo);
 
-  const { userInfo } = useContext<UserInfoContextProps>(userInfoContext);
+  const { userInfo, setUserInfo } = useContext<UserInfoContextProps>(userInfoContext);
 
   const findCodeInfoByType = (type: CodeType) => {
     switch (type) {
@@ -142,6 +142,7 @@ const BatchTasks: React.FC = () => {
     try {
       const res = await checkResult({ batchTaskId: taskId });
       handleOpenResultChart(res.upperGoals, res.lowerGoals);
+      setUserInfo({ ...userInfo, batchTaskId: null, status: UserStatus.Normal });
     } catch (e) {
       console.error(e);
     }

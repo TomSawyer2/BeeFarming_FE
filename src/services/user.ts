@@ -38,7 +38,7 @@ export interface UserInfo {
   username: string;
   permission: UserPermission;
   status: UserStatus;
-  batchTaskId?: number;
+  batchTaskId?: number | null;
 }
 
 // 注册
