@@ -88,6 +88,7 @@ const User = () => {
   const handleBanUser = useCallback(async (id: number) => {
     Modal.confirm({
       content: '确认封禁该用户？',
+      centered: true,
       onOk: async () => {
         try {
           await banUser({ userId: id });
@@ -102,6 +103,7 @@ const User = () => {
   const handleUnbanUser = useCallback(async (id: number) => {
     Modal.confirm({
       content: '确认解封该用户？',
+      centered: true,
       onOk: async () => {
         try {
           await unbanUser({ userId: id });

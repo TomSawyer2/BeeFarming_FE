@@ -111,6 +111,10 @@ const ResultChart = (props: IProps) => {
     },
   ];
 
+  // 计算胜率
+  const winRateA = `${(winnersA / upperFinalGoals.length) * 100}%`;
+  const winRateB = `${(winnersB / upperFinalGoals.length) * 100}%`;
+
   return (
     <div className={styles.box}>
       <div className={styles.box_left}>
@@ -119,9 +123,12 @@ const ResultChart = (props: IProps) => {
           data={pieChartData}
         />
         {draw !== upperFinalGoals.length ? (
-          <span>玩家{winnersA > winnersB ? 'A' : 'B'}获得了胜利</span>
+          <span className={styles.result_text}>
+            <span>玩家{winnersA > winnersB ? 'A' : 'B'}</span>以
+            {winnersA > winnersB ? winRateA : winRateB}胜率获得了胜利
+          </span>
         ) : (
-          <span>双方平局</span>
+          <span className={styles.result_text}>双方平局</span>
         )}
       </div>
       <div className={styles.box_right}>

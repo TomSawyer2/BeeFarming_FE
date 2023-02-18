@@ -40,7 +40,6 @@ specifiers:
   react-activation: ^0.11.2
   react-color: ^2.19.3
   react-dom: ^18.2.0
-  react-modal: ^3.16.1
   react-monaco-editor: ^0.51.0
   react-router-dom: ^6.4.2
   react-scripts: 5.0.0
@@ -75,7 +74,6 @@ dependencies:
   react-activation: 0.11.2_react@18.2.0
   react-color: 2.19.3_react@18.2.0
   react-dom: 18.2.0_react@18.2.0
-  react-modal: 3.16.1_biqbaboplfbrettd7655fr4n2y
   react-monaco-editor: 0.51.0_36f7sbljymzebqfnfcq6tmizt4
   react-router-dom: 6.4.2_biqbaboplfbrettd7655fr4n2y
   react-scripts: 5.0.0_y4fwvlt4my7glyeaphwc4dhjya
@@ -7573,6 +7571,7 @@ packages:
 
   /exenv/1.2.2:
     resolution: {integrity: sha512-Z+ktTxTwv9ILfgKCk32OX3n/doe+OcLTRtqK9pcL+JsP3J1/VW8Uvl4ZjLlKqeW4rzK4oesDOGMEMRIZqtP4Iw==}
+    dev: true
 
   /exit/0.1.2:
     resolution: {integrity: sha512-Zk/eNKV2zbjpKzrsQ+n1G6poVbErQxJ0LBOJXaKZ1EViLzH+hrLu9cdXI4zw9dBQJslwBEpbQ2P1oS7nDxs6jQ==}
@@ -13594,21 +13593,7 @@ packages:
 
   /react-lifecycles-compat/3.0.4:
     resolution: {integrity: sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==}
-
-  /react-modal/3.16.1_biqbaboplfbrettd7655fr4n2y:
-    resolution: {integrity: sha512-VStHgI3BVcGo7OXczvnJN7yT2TWHJPDXZWyI/a0ssFNhGZWsPmB8cF0z33ewDXq4VfYMO1vXgiv/g8Nj9NDyWg==}
-    engines: {node: '>=8'}
-    peerDependencies:
-      react: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-      react-dom: ^0.14.0 || ^15.0.0 || ^16 || ^17 || ^18
-    dependencies:
-      exenv: 1.2.2
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-dom: 18.2.0_react@18.2.0
-      react-lifecycles-compat: 3.0.4
-      warning: 4.0.3
-    dev: false
+    dev: true
 
   /react-monaco-editor/0.51.0_36f7sbljymzebqfnfcq6tmizt4:
     resolution: {integrity: sha512-6jx1V8p6gHVKJHFaTvicOtmlhFjOJhekobeNd92ZAo7F5UvAin1cF7bxWLCKgtxClYZ7CB3Ar284Kpbhj22FpQ==}

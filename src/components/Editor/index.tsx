@@ -1,6 +1,6 @@
 import React, { forwardRef, useImperativeHandle, useState } from 'react';
 import MonacoEditor from 'react-monaco-editor';
-import './index.less';
+import styles from './index.less';
 
 interface EditorProps {
   ref: any;
@@ -27,7 +27,10 @@ const Editor: React.FC<EditorProps> = forwardRef((props, ref) => {
   }));
 
   return (
-    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
+    <div
+      style={{ position: 'absolute', width: '100%', height: '100%' }}
+      className={styles.editor}
+    >
       <MonacoEditor
         theme="vs-dark"
         language="java"

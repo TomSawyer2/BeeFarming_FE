@@ -1,5 +1,5 @@
 import { defineConfig } from 'umi';
-import MonacoWebpackPlugin from "monaco-editor-webpack-plugin";
+import MonacoWebpackPlugin from 'monaco-editor-webpack-plugin';
 import { InjectManifest } from 'workbox-webpack-plugin';
 
 export default defineConfig({
@@ -10,16 +10,16 @@ export default defineConfig({
     type: 'none',
   },
   routes: [
+    { path: '/register', component: '@/pages/register/index', title: 'BF - 注册' },
+    { path: '/login', component: '@/pages/login/index', title: 'BF - 登录' },
     {
       path: '/batchTasks',
       component: '@/pages/batchTasks/index',
-      title: '批处理任务',
+      title: 'BF - 批处理任务',
     },
-    { path: '/register', component: '@/pages/register/index', title: '注册' },
-    { path: '/login', component: '@/pages/login/index', title: '登录' },
-    { path: '/history', component: '@/pages/history/index', title: '历史记录' },
-    { path: '/admin', component: '@/pages/admin/index', title: '管理员' },
-    { path: '/ui', component: '@/pages/ui/index', title: 'UI' },
+    { path: '/history', component: '@/pages/history/index', title: 'BF - 历史记录' },
+    { path: '/admin', component: '@/pages/admin/index', title: 'BF - 管理员' },
+    { path: '/ui', component: '@/pages/ui/index', title: 'BF - UI' },
   ],
   title: 'BeeFarming Web',
   fastRefresh: {},
@@ -37,9 +37,9 @@ export default defineConfig({
   copy: ['/src/pwa/manifest.webmanifest'],
   links: [{ rel: 'manifest', href: '/manifest.webmanifest' }],
   chainWebpack: (config: any) => {
-    config.plugin("monaco-editor").use(new MonacoWebpackPlugin(), [
+    config.plugin('monaco-editor').use(new MonacoWebpackPlugin(), [
       {
-        languages: ["java"],
+        languages: ['java'],
       },
     ]);
     config.plugin('workbox').use(InjectManifest, [

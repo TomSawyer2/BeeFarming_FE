@@ -1,11 +1,13 @@
 import Editor from '@/components/Editor';
-import { Button, Form, Input, message, Spin, Descriptions } from 'antd';
+import { Button, Form, Input, message, Spin } from 'antd';
 import React, { useRef, useState } from 'react';
-import Modal from 'react-modal';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
-import { CodeType } from '@/const/typings';
+import { BatchTaskStatus, CodeType } from '@/const/typings';
+import { Modal } from 'antd';
 
 import './index.less';
+import ResultChart from '@/components/ResultChart';
+import { createPortal } from 'react-dom';
 
 interface BatchTaskConfig {
   name: string;
@@ -22,7 +24,6 @@ interface CodeInfo {
 const BatchTasks: React.FC = () => {
   const editorRef = useRef(null);
   const [open, setOpen] = useState<boolean>(false);
-  const [close, setClose] = useState<boolean>(true);
 
   const [codeAHoney, setCodeAHoney] = useState<CodeInfo>({ type: 'honey-A' } as CodeInfo);
   const [codeAHornet, setCodeAHornet] = useState<CodeInfo>({ type: 'hornet-A' } as CodeInfo);
@@ -56,10 +57,6 @@ const BatchTasks: React.FC = () => {
 
   const [batchTaskId, setBatchTaskId] = useState<number>(0);
 
-  const [upperGoals, setUpperGoals] = useState<string>('');
-  const [lowerGoals, setLowerGoals] = useState<string>('');
-  const result = [upperGoals, lowerGoals];
-
   const handleUpload = async (type: CodeType) => {
     try {
       // @ts-ignore
@@ -81,12 +78,11 @@ const BatchTasks: React.FC = () => {
   const handleLoading = async (taskId: number) => {
     try {
       const res = await checkStatus({ batchTaskId: taskId });
-      console.log(res);
-      if (res.status === 2 || res.status === 3) {
+      if (res.status === BatchTaskStatus.Finished || res.status === BatchTaskStatus.Failed) {
         return false;
       } else return true;
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -122,7 +118,6 @@ const BatchTasks: React.FC = () => {
             clearInterval(interval);
             setOpen(false);
             await handleCheck(taskId);
-            setClose(false);
           }
         }, 1000);
       }
@@ -143,59 +138,46 @@ const BatchTasks: React.FC = () => {
   const handleCheck = async (taskId: number) => {
     try {
       const res = await checkResult({ batchTaskId: taskId });
-      console.log(res);
-      setUpperGoals(res.upperGoals);
-      setLowerGoals(res.lowerGoals);
+      handleOpenResultChart(res.upperGoals, res.lowerGoals);
     } catch (e) {
       console.error(e);
     }
   };
 
+  const handleOpenResultChart = (upperGoals: string, lowerGoals: string) => {
+    if (!upperGoals || !lowerGoals) return;
+    Modal.confirm({
+      content: (
+        <ResultChart
+          upperGoals={upperGoals}
+          lowerGoals={lowerGoals}
+        />
+      ),
+      width: 1000 + 48,
+      icon: null,
+      footer: null,
+      maskClosable: true,
+    });
+  };
+
   return (
     <div className="bt">
-      <Modal
-        isOpen={open}
-        overlayClassName="overlay"
-        className="content"
-        ariaHideApp={false}
-      >
-        <div className="bg">
-          <div className="box">
-            <Spin tip="Loading"></Spin>
-            <Button
-              onClick={() => handleCancel()}
-              className="cancel"
-            >
-              取消运行
-            </Button>
-          </div>
-        </div>
-      </Modal>
-      <Modal
-        isOpen={!close}
-        overlayClassName="overlay"
-        className="content"
-        ariaHideApp={false}
-      >
-        <div className="bg">
-          <div className="box">
-            <Descriptions
-              title="运行结果"
-              bordered
-              column={1}
-            >
-              <Descriptions.Item label="上半场">{upperGoals}</Descriptions.Item>
-              <Descriptions.Item label="下半场">{lowerGoals}</Descriptions.Item>
-            </Descriptions>
-            <Button
-              type="primary"
-              onClick={() => setClose(true)}
-            >
-              关闭窗口
-            </Button>
-          </div>
-        </div>
-      </Modal>
+      {open &&
+        createPortal(
+          <div className="fs-mask">
+            <div className="fs-mask-box">
+              <Spin tip="Loading"></Spin>
+              <Button
+                onClick={() => handleCancel()}
+                className="cancel"
+              >
+                取消运行
+              </Button>
+            </div>
+          </div>,
+          document.getElementById('root') as HTMLElement,
+        )}
+
       <div className="bt-editor">
         <div className="bt-editor-left">
           <div className="honeyA">
