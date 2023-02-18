@@ -59,19 +59,9 @@ const User = () => {
       key: 'action',
       render: (_, record: UserInfo) =>
         record.permission === UserPermission.Banned ? (
-          <Button
-            type="primary"
-            onClick={() => handleUnbanUser(record.id)}
-          >
-            解封
-          </Button>
+          <Button onClick={() => handleUnbanUser(record.id)}>解封</Button>
         ) : (
-          <Button
-            type="primary"
-            onClick={() => handleBanUser(record.id)}
-          >
-            封禁
-          </Button>
+          <Button onClick={() => handleBanUser(record.id)}>封禁</Button>
         ),
     },
   ];

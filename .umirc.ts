@@ -19,6 +19,7 @@ export default defineConfig({
     { path: '/login', component: '@/pages/login/index', title: '登录' },
     { path: '/history', component: '@/pages/history/index', title: '历史记录' },
     { path: '/admin', component: '@/pages/admin/index', title: '管理员' },
+    { path: '/ui', component: '@/pages/ui/index', title: 'UI' },
   ],
   title: 'BeeFarming Web',
   fastRefresh: {},

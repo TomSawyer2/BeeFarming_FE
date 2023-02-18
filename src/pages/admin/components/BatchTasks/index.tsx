@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './index.less';
-import { Button, Table } from 'antd';
+import { Button, Modal, Table } from 'antd';
 import { getAdminBatchTasksHistory } from '@/services/admin';
 import { ColumnsType } from 'antd/es/table';
 import { BatchTask, BatchTaskStatus } from '@/const/typings';
 import EllipseModal from '@/components/EllipseModal';
 import dayjs from 'dayjs';
+import ResultChart from '@/components/ResultChart';
 
 const BatchTasks = () => {
   const [page, setPage] = useState<number>(1);
@@ -141,6 +142,33 @@ const BatchTasks = () => {
           maxLength={4}
         />
       ),
+    },
+    {
+      title: '结果分析',
+      dataIndex: 'resultAnalysis',
+      key: 'resultAnalysis',
+      render: (_, { upperGoals, lowerGoals }) => {
+        const handleOpenResultChart = (upperGoals: string, lowerGoals: string) => {
+          if (!upperGoals || !lowerGoals) return;
+          Modal.confirm({
+            content: (
+              <ResultChart
+                upperGoals={upperGoals}
+                lowerGoals={lowerGoals}
+              />
+            ),
+            width: 1000 + 48,
+            icon: null,
+            footer: null,
+            maskClosable: true,
+          });
+        };
+        return upperGoals && lowerGoals ? (
+          <Button onClick={() => handleOpenResultChart(upperGoals, lowerGoals)}>结果分析</Button>
+        ) : (
+          '--'
+        );
+      },
     },
   ];
 
