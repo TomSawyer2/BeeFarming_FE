@@ -32,7 +32,6 @@ const Page: React.FC = () => {
           <div className="inputBox">
             <Input
               type="text"
-              placeholder="账户"
               value={username}
               autoComplete="off"
               onChange={(e) => setUsername(e.target.value)}
@@ -43,7 +42,6 @@ const Page: React.FC = () => {
           <div className="inputBox">
             <Input
               type="password"
-              placeholder="密码"
               value={password}
               autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}

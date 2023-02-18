@@ -4,10 +4,10 @@ import React, { useRef, useState } from 'react';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
 import { BatchTaskStatus, CodeType } from '@/const/typings';
 import { Modal } from 'antd';
-
-import './index.less';
 import ResultChart from '@/components/ResultChart';
 import { createPortal } from 'react-dom';
+
+import './index.less';
 
 interface BatchTaskConfig {
   name: string;

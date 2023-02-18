@@ -85,7 +85,7 @@ export async function checkStatus(params: CheckStatusParams) {
 export async function stopTask(params: CheckStatusParams) {
   const url = '/api/batchTasks/stop';
 
-  const { data } = await axios.put(url, { params });
+  const { data } = await axios.post(url, params);
   return data;
 }
 
