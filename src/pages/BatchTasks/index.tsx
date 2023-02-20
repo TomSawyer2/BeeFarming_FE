@@ -1,5 +1,5 @@
 import Editor from '@/components/Editor';
-import { Button, Form, Input, message, Spin } from 'antd';
+import { Button, Form, Input, message, Spin, Progress } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
 import { BatchTaskStatus, CodeType, UserStatus } from '@/const/typings';
@@ -27,6 +27,9 @@ interface CodeInfo {
 const BatchTasks: React.FC = () => {
   const editorRef = useRef(null);
   const [open, setOpen] = useState<boolean>(false);
+
+  const [totalRounds, setTotalRounds] = useState<number>(0);
+  const [currentRound, setCurrentRound] = useState<number>(0);
 
   const [codeAHoney, setCodeAHoney] = useState<CodeInfo>({ type: 'honey-A' } as CodeInfo);
   const [codeAHornet, setCodeAHornet] = useState<CodeInfo>({ type: 'hornet-A' } as CodeInfo);
@@ -121,6 +124,8 @@ const BatchTasks: React.FC = () => {
   const handleLoading = async (taskId: number) => {
     try {
       const res = await checkStatus({ batchTaskId: taskId });
+      const currentRound = res.currentRound;
+      setCurrentRound(currentRound);
       if (
         res.status === BatchTaskStatus.Finished ||
         res.status === BatchTaskStatus.Failed ||
@@ -135,6 +140,7 @@ const BatchTasks: React.FC = () => {
 
   const handleRun = async (values: BatchTaskConfig) => {
     const { name, timeout = 1, totalRounds = 5 } = values;
+    setTotalRounds(totalRounds);
     try {
       if (
         !codeAHoney?.codeId ||
@@ -175,6 +181,7 @@ const BatchTasks: React.FC = () => {
             await handleCheck(taskId);
           }
         }, 1000);
+        setCurrentRound(0);
       }
     } catch (e) {
       console.error(e);
@@ -268,7 +275,11 @@ const BatchTasks: React.FC = () => {
         createPortal(
           <div className="fs-mask">
             <div className="fs-mask-box">
-              <Spin tip="Loading"></Spin>
+              <Spin tip="Loading">
+              <div className="loading-content">
+                <Progress percent={((currentRound / 2) / totalRounds) * 100} status="active" />
+              </div>
+              </Spin>
               <Button
                 onClick={() => handleCancel()}
                 className="cancel"
