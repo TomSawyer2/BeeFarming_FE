@@ -124,8 +124,9 @@ const BatchTasks: React.FC = () => {
   const handleLoading = async (taskId: number) => {
     try {
       const res = await checkStatus({ batchTaskId: taskId });
-      const currentRound = res.currentRound;
+      const { currentRound, totalRounds } = res;
       setCurrentRound(currentRound);
+      setTotalRounds(totalRounds);
       if (
         res.status === BatchTaskStatus.Finished ||
         res.status === BatchTaskStatus.Failed ||
@@ -275,14 +276,20 @@ const BatchTasks: React.FC = () => {
         createPortal(
           <div className="fs-mask">
             <div className="fs-mask-box">
-              <Spin tip="Loading">
-                <div className="loading-content">
-                  <Progress
-                    percent={(currentRound / 2 / totalRounds) * 100}
-                    status="active"
-                  />
-                </div>
-              </Spin>
+              <Spin
+                tip="Loading"
+                size="large"
+              />
+              <div className="loading-content">
+                <Progress
+                  percent={Number(((currentRound / 2 / totalRounds) * 100).toFixed(2))}
+                  status="active"
+                  strokeWidth={15}
+                />
+              </div>
+              <div className="loading-content-stat">
+                当前轮数：{Math.floor(currentRound / 2)} 总轮数：{totalRounds}
+              </div>
               <Button
                 onClick={() => handleCancel()}
                 className="cancel"

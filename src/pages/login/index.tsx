@@ -17,7 +17,7 @@ const Page: React.FC = () => {
       };
       const token = await login(user);
       window.localStorage.setItem('token', token);
-      message.success('登录成功!');
+      message.success('登录成功！');
       window.location.pathname = '/batchTasks';
     } catch (e) {
       console.error(e);

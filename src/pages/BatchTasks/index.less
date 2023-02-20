@@ -3,6 +3,14 @@
   label {
     color: white !important;
   }
+  .ant-input {
+    background-color: #1e1e1e !important;
+    color: white !important;
+    border: none !important;
+  }
+  .ant-btn-primary {
+    box-shadow: none !important;
+  }
 }
 
 .bt-editor {
@@ -21,7 +29,7 @@
 }
 
 .settings {
-  width: 90%;
+  width: 500px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -35,11 +43,24 @@
   display: flex;
   justify-content: center;
   width: 200px;
+  height: 35px;
   // 黑金边框
-  border: 1px solid #ff8928;
-  background-color: black;
+  background-color: #333333;
+  display: flex;
+  align-items: center;
+  border: #4dbb5f solid 1px;
+  transition: all 0.3s;
+  & > span {
+    font-size: 18px;
+    color: #4dbb5f;
+    transition: all 0.3s;
+  }
   &:hover {
-    background-color: #ff8928 !important;
+    background-color: #4dbb5f !important;
+    & > span {
+      color: white !important;
+      transition: all 0.3s;
+    }
   }
 }
 // .check {
@@ -55,8 +76,8 @@
 
 .st-header {
   text-align: center;
-  font-size: large;
-  margin: 20px;
+  margin: 30px;
+  font-size: 20px;
 }
 
 .batchTask-form {
@@ -64,6 +85,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 400px;
 }
 
 .ant-form-item-label > label {
@@ -103,8 +125,6 @@
 
 .cancel {
   margin-top: 1%;
-  background-color: #1890ff;
-  color: white;
 }
 
 .bt-editor-left,
@@ -136,7 +156,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.65);
 }
 
 .fs-mask-box {
@@ -148,9 +168,9 @@
 }
 
 .loading-content {
-  margin-top: 100px;
-  height: 20px;
-  width: 220px;
+  margin-top: 20px;
+  height: 50px;
+  width: 500px;
   opacity: 1;
 }
 
@@ -159,4 +179,16 @@
 }
 .ant-spin-nested-loading .ant-spin-blur::after {
   opacity: 0;
+}
+.ant-progress-text {
+  font-size: 24px;
+  color: white !important;
+}
+.ant-progress {
+  display: inline-flex;
+}
+
+.loading-content-stat {
+  color: white;
+  font-size: 20px;
 }

@@ -2,6 +2,7 @@ import HeaderBar from '@/components/HeaderBar';
 import React, { useCallback, useEffect, useState } from 'react';
 import { UserInfo, getUserInfo } from './services/user';
 import { userInfoContext } from './const/context';
+import { ConfigProvider } from 'antd';
 
 const whiteListUrl = ['/login', '/register'];
 
@@ -35,9 +36,17 @@ const PermissionWrapper = (props: any) => {
   }, [localStorage.getItem('token')]);
 
   return (
-    <userInfoContext.Provider value={{ userInfo, setUserInfo }}>
-      {!initialLizing && props.children}
-    </userInfoContext.Provider>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#00b96b',
+        },
+      }}
+    >
+      <userInfoContext.Provider value={{ userInfo, setUserInfo }}>
+        {!initialLizing && props.children}
+      </userInfoContext.Provider>
+    </ConfigProvider>
   );
 };
 
