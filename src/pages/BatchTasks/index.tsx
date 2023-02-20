@@ -291,6 +291,7 @@ const BatchTasks: React.FC = () => {
                   percent={Number(((currentRound / 2 / totalRounds) * 100).toFixed(2))}
                   status="active"
                   strokeWidth={15}
+                  strokeColor="#00b96b"
                 />
               </div>
               <div className="loading-content-stat">
