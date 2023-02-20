@@ -74,13 +74,11 @@ const LineChart = (props: LineChartProps) => {
       {
         name: '玩家A',
         type: 'line',
-        stack: 'Total',
         data: dataA,
       },
       {
         name: '玩家B',
         type: 'line',
-        stack: 'Total',
         data: dataB,
       },
     ],

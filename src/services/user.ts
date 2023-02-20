@@ -1,4 +1,4 @@
-import { UserPermission, UserStatus } from '@/const/typings';
+import { CodeType, UserPermission, UserStatus } from '@/const/typings';
 import axios from '@/utils/axios';
 
 export interface RegisterParams {
@@ -10,7 +10,7 @@ export type LoginParams = RegisterParams;
 
 export interface CodeParams {
   content: string;
-  type: string;
+  type: CodeType;
   codeId?: number;
 }
 

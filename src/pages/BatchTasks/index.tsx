@@ -6,9 +6,11 @@ import { BatchTaskStatus, CodeType, UserStatus } from '@/const/typings';
 import { Modal } from 'antd';
 import ResultChart from '@/components/ResultChart';
 import { createPortal } from 'react-dom';
+import { debounce } from 'lodash';
 
 import './index.less';
 import { userInfoContext, UserInfoContextProps } from '@/const/context';
+import LoadingIcon from '@/components/LoadingIcon';
 
 interface BatchTaskConfig {
   name: string;
@@ -33,6 +35,23 @@ const BatchTasks: React.FC = () => {
   const [codeAHornet, setCodeAHornet] = useState<CodeInfo>({ type: 'hornet-A' } as CodeInfo);
   const [codeBHoney, setCodeBHoney] = useState<CodeInfo>({ type: 'honey-B' } as CodeInfo);
   const [codeBHornet, setCodeBHornet] = useState<CodeInfo>({ type: 'hornet-B' } as CodeInfo);
+  // 创建上面state的ref
+  const codeAHoneyRef = useRef(codeAHoney);
+  const codeAHornetRef = useRef(codeAHornet);
+  const codeBHoneyRef = useRef(codeBHoney);
+  const codeBHornetRef = useRef(codeBHornet);
+
+  const refMap = {
+    'honey-A': codeAHoneyRef,
+    'honey-B': codeBHoneyRef,
+    'hornet-A': codeAHornetRef,
+    'hornet-B': codeBHornetRef,
+  };
+
+  const [codeAHoneyLoading, setCodeAHoneyLoading] = useState<boolean>(false);
+  const [codeAHornetLoading, setCodeAHornetLoading] = useState<boolean>(false);
+  const [codeBHoneyLoading, setCodeBHoneyLoading] = useState<boolean>(false);
+  const [codeBHornetLoading, setCodeBHornetLoading] = useState<boolean>(false);
 
   const { userInfo, setUserInfo } = useContext<UserInfoContextProps>(userInfoContext);
 
@@ -40,23 +59,48 @@ const BatchTasks: React.FC = () => {
     switch (type) {
       case 'honey-A':
         return {
-          codeInfo: codeAHoney,
+          codeInfo: codeAHoneyRef.current,
           setCodeInfo: setCodeAHoney,
         };
       case 'honey-B':
         return {
-          codeInfo: codeBHoney,
+          codeInfo: codeBHoneyRef.current,
           setCodeInfo: setCodeBHoney,
         };
       case 'hornet-A':
         return {
-          codeInfo: codeAHornet,
+          codeInfo: codeAHornetRef.current,
           setCodeInfo: setCodeAHornet,
         };
       case 'hornet-B':
         return {
-          codeInfo: codeBHornet,
+          codeInfo: codeBHornetRef.current,
           setCodeInfo: setCodeBHornet,
+        };
+    }
+  };
+
+  const findLoadingByType = (type: CodeType) => {
+    switch (type) {
+      case 'honey-A':
+        return {
+          loading: codeAHoneyLoading,
+          setLoading: setCodeAHoneyLoading,
+        };
+      case 'honey-B':
+        return {
+          loading: codeBHoneyLoading,
+          setLoading: setCodeBHoneyLoading,
+        };
+      case 'hornet-A':
+        return {
+          loading: codeAHornetLoading,
+          setLoading: setCodeAHornetLoading,
+        };
+      case 'hornet-B':
+        return {
+          loading: codeBHornetLoading,
+          setLoading: setCodeBHornetLoading,
         };
     }
   };
@@ -67,15 +111,11 @@ const BatchTasks: React.FC = () => {
     try {
       // @ts-ignore
       const content = editorRef.current?.getContent(type);
-      if (content === '') {
-        message.error('请先输入代码！');
-        return;
-      }
       const { codeInfo, setCodeInfo } = findCodeInfoByType(type);
       const codeId = codeInfo?.codeId || undefined;
       const { codeId: newId } = await uploadCode({ type, codeId, content });
       setCodeInfo({ type, codeId: newId, content });
-      message.success('上传成功！');
+      refMap[type].current = { type, codeId: newId, content };
     } catch (e) {
       console.error(e);
     }
@@ -84,10 +124,13 @@ const BatchTasks: React.FC = () => {
   const handleLoading = async (taskId: number) => {
     try {
       const res = await checkStatus({ batchTaskId: taskId });
-      console.log(res);
       const currentRound = res.currentRound;
       setCurrentRound(currentRound);
-      if (res.status === BatchTaskStatus.Finished || res.status === BatchTaskStatus.Failed) {
+      if (
+        res.status === BatchTaskStatus.Finished ||
+        res.status === BatchTaskStatus.Failed ||
+        res.status === BatchTaskStatus.Timeout
+      ) {
         return false;
       } else return true;
     } catch (e) {
@@ -106,6 +149,14 @@ const BatchTasks: React.FC = () => {
         !codeBHornet?.codeId
       ) {
         message.error('请先上传代码！');
+        return;
+      } else if (
+        codeAHoneyLoading ||
+        codeAHornetLoading ||
+        codeBHoneyLoading ||
+        codeBHornetLoading
+      ) {
+        message.error('代码正在上传中，请稍后再试！');
         return;
       } else {
         const runCodeParams = {
@@ -149,11 +200,33 @@ const BatchTasks: React.FC = () => {
   const handleCheck = async (taskId: number) => {
     try {
       const res = await checkResult({ batchTaskId: taskId });
-      handleOpenResultChart(res.upperGoals, res.lowerGoals);
+      if (res.status === BatchTaskStatus.Failed) {
+        handleResultErrorOpen(res?.containerLog || '');
+      } else if (res.status === BatchTaskStatus.Finished) {
+        handleOpenResultChart(res.upperGoals, res.lowerGoals);
+      } else if (res.status === BatchTaskStatus.Timeout) {
+        message.error('任务超时');
+      } else {
+        message.error('发生未知错误');
+      }
       setUserInfo({ ...userInfo, batchTaskId: null, status: UserStatus.Normal });
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleResultErrorOpen = (log: string) => {
+    Modal.confirm({
+      icon: null,
+      title: '错误日志',
+      centered: true,
+      content: (
+        <div style={{ maxHeight: 400, overflow: 'auto' }}>
+          <span>以下内容为容器输出报错日志</span>
+          <pre>{log}</pre>
+        </div>
+      ),
+    });
   };
 
   const handleOpenResultChart = (upperGoals: string, lowerGoals: string) => {
@@ -188,6 +261,14 @@ const BatchTasks: React.FC = () => {
     }
   }, []);
 
+  // 防抖200ms
+  const handleEditorChange = debounce(async (type: CodeType) => {
+    const { setLoading } = findLoadingByType(type);
+    setLoading(true);
+    await handleUpload(type);
+    setLoading(false);
+  }, 200);
+
   return (
     <div className="bt">
       {open &&
@@ -213,27 +294,24 @@ const BatchTasks: React.FC = () => {
       <div className="bt-editor">
         <div className="bt-editor-left">
           <div className="honeyA">
-            <Button
-              className="upload"
-              onClick={() => handleUpload('honey-A')}
-            >
-              上传
-            </Button>
-            <Editor ref={editorRef} />
+            <Editor
+              ref={editorRef}
+              onChange={(type) => handleEditorChange(type)}
+            />
           </div>
           <div className="tooltip">
-            <span>玩家A蜜蜂代码↑</span>
-            <span>玩家A黄蜂代码↓</span>
+            <span>
+              玩家A蜜蜂代码↑ <LoadingIcon loading={findLoadingByType('honey-A').loading} />
+            </span>
+            <span>
+              玩家A黄蜂代码↓ <LoadingIcon loading={findLoadingByType('hornet-A').loading} />
+            </span>
           </div>
           <div className="hornetA">
-            {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>黄蜂A</div> */}
-            <Button
-              className="upload"
-              onClick={() => handleUpload('hornet-A')}
-            >
-              上传
-            </Button>
-            <Editor ref={editorRef} />
+            <Editor
+              ref={editorRef}
+              onChange={(type) => handleEditorChange(type)}
+            />
           </div>
         </div>
 
@@ -288,27 +366,24 @@ const BatchTasks: React.FC = () => {
 
         <div className="bt-editor-right">
           <div className="honeyB">
-            {/* <div className='codeType' style={{height:'6%', backgroundColor:'white'}}>蜜蜂B</div> */}
-            <Button
-              className="upload"
-              onClick={() => handleUpload('honey-B')}
-            >
-              上传
-            </Button>
-            <Editor ref={editorRef} />
+            <Editor
+              ref={editorRef}
+              onChange={(type) => handleEditorChange(type)}
+            />
           </div>
           <div className="tooltip">
-            <span>玩家B蜜蜂代码↑</span>
-            <span>玩家B黄蜂代码↓</span>
+            <span>
+              玩家B蜜蜂代码↑ <LoadingIcon loading={findLoadingByType('honey-B').loading} />
+            </span>
+            <span>
+              玩家B黄蜂代码↓ <LoadingIcon loading={findLoadingByType('hornet-B').loading} />
+            </span>
           </div>
           <div className="hornetB">
-            <Button
-              className="upload"
-              onClick={() => handleUpload('hornet-B')}
-            >
-              上传
-            </Button>
-            <Editor ref={editorRef} />
+            <Editor
+              ref={editorRef}
+              onChange={(type) => handleEditorChange(type)}
+            />
           </div>
         </div>
       </div>
