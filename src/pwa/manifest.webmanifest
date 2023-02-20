@@ -6,8 +6,8 @@
     "description": "BeeFarming",
     "display": "standalone",
     "display_override": ["minimal-ui", "standalone", "fullscreen"],
-    "start_url": "/",
-    "scope": "/",
+    "start_url": "/login",
+    "scope": "/login",
     "icons": [
         {
             "src": "/img/icons/android-chrome-192x192.png",
