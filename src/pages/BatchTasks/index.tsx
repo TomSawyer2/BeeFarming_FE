@@ -200,7 +200,7 @@ const BatchTasks: React.FC = () => {
   const handleCheck = async (taskId: number) => {
     try {
       const res = await checkResult({ batchTaskId: taskId });
-      if (res.status === BatchTaskStatus.Failed) {
+      if (res.status === BatchTaskStatus.Failed && res?.containerLog) {
         handleResultErrorOpen(res?.containerLog || '');
       } else if (res.status === BatchTaskStatus.Finished) {
         handleOpenResultChart(res.upperGoals, res.lowerGoals);
@@ -276,9 +276,12 @@ const BatchTasks: React.FC = () => {
           <div className="fs-mask">
             <div className="fs-mask-box">
               <Spin tip="Loading">
-              <div className="loading-content">
-                <Progress percent={((currentRound / 2) / totalRounds) * 100} status="active" />
-              </div>
+                <div className="loading-content">
+                  <Progress
+                    percent={(currentRound / 2 / totalRounds) * 100}
+                    status="active"
+                  />
+                </div>
               </Spin>
               <Button
                 onClick={() => handleCancel()}
