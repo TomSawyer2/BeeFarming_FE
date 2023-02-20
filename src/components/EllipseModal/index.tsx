@@ -15,6 +15,9 @@ const EllipseModal = (props: IProps) => {
       content,
       width: 800,
       centered: true,
+      getContainer() {
+        return document.getElementById('root') as HTMLElement;
+      },
     });
   };
 

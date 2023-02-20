@@ -50,7 +50,4 @@ export default defineConfig({
       },
     ]);
   },
-  antd: {
-    dark: true,
-  },
 });

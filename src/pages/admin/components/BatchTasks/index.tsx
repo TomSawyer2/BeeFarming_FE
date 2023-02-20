@@ -161,6 +161,9 @@ const BatchTasks = () => {
             icon: null,
             footer: null,
             maskClosable: true,
+            getContainer() {
+              return document.getElementById('root') as HTMLElement;
+            },
           });
         };
         return upperGoals && lowerGoals ? (

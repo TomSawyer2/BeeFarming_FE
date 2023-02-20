@@ -89,6 +89,9 @@ const User = () => {
     Modal.confirm({
       content: '确认封禁该用户？',
       centered: true,
+      getContainer() {
+        return document.getElementById('root') as HTMLElement;
+      },
       onOk: async () => {
         try {
           await banUser({ userId: id });
@@ -104,6 +107,9 @@ const User = () => {
     Modal.confirm({
       content: '确认解封该用户？',
       centered: true,
+      getContainer() {
+        return document.getElementById('root') as HTMLElement;
+      },
       onOk: async () => {
         try {
           await unbanUser({ userId: id });

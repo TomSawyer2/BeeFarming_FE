@@ -221,6 +221,9 @@ const BatchTasks: React.FC = () => {
       icon: null,
       title: '错误日志',
       centered: true,
+      getContainer() {
+        return document.getElementById('root') as HTMLElement;
+      },
       content: (
         <div style={{ maxHeight: 400, overflow: 'auto' }}>
           <span>以下内容为容器输出报错日志</span>
@@ -239,6 +242,9 @@ const BatchTasks: React.FC = () => {
           lowerGoals={lowerGoals}
         />
       ),
+      getContainer() {
+        return document.getElementById('root') as HTMLElement;
+      },
       width: 1000 + 48,
       icon: null,
       footer: null,

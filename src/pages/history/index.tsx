@@ -153,6 +153,9 @@ const History: React.FC = () => {
                 lowerGoals={lowerGoals}
               />
             ),
+            getContainer() {
+              return document.getElementById('root') as HTMLElement;
+            },
             width: 1000 + 48,
             icon: null,
             footer: null,
