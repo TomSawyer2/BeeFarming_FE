@@ -15,9 +15,15 @@ const defaultConfig: AxiosRequestConfig = {
   timeout: 100 * 1000,
   headers: {
     'Content-type': 'application/json',
-    Authorization: getToken(),
   },
   baseURL: 'https://bf.tomsawyer2.xyz',
+};
+
+// 请求拦截
+const requestInterceptor = (config: AxiosRequestConfig) => {
+  // @ts-ignore
+  config.headers.Authorization = getToken();
+  return config;
 };
 
 interface responseData {
@@ -49,6 +55,7 @@ const commonErrorHander = (error: AxiosError) => {
 
 const instance: AxiosInstance = axios.create(defaultConfig);
 
+instance.interceptors.request.use(requestInterceptor);
 instance.interceptors.response.use(responseInterceptor, commonErrorHander);
 
 export default instance;
