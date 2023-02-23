@@ -246,6 +246,7 @@ const BatchTasks: React.FC = () => {
         return document.getElementById('root') as HTMLElement;
       },
       width: 1000 + 48,
+      centered: true,
       icon: null,
       footer: null,
       maskClosable: true,

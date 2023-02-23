@@ -159,6 +159,7 @@ const History: React.FC = () => {
             width: 1000 + 48,
             icon: null,
             footer: null,
+            centered: true,
             maskClosable: true,
           });
         };

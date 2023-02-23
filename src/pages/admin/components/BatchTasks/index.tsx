@@ -161,6 +161,7 @@ const BatchTasks = () => {
             icon: null,
             footer: null,
             maskClosable: true,
+            centered: true,
             getContainer() {
               return document.getElementById('root') as HTMLElement;
             },
