@@ -4,10 +4,10 @@
     "theme_color": "#66CCFF",
     "background_color": "#66CCFF",
     "description": "BeeFarming",
-    "display": "standalone",
+    "display": "fullscreen",
     "display_override": ["minimal-ui", "standalone", "fullscreen"],
-    "start_url": "/login",
-    "scope": "/login",
+    "start_url": "/",
+    "scope": "/",
     "icons": [
         {
             "src": "/img/icons/android-chrome-192x192.png",
