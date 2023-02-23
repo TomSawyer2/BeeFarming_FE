@@ -9,10 +9,10 @@ const whiteListUrl = ['/login', '/register'];
 // @ts-ignore
 export function onRouteChange({ location }) {
   if (location.pathname === '/') {
-    window.location.href = '/login';
+    window.location.pathname = '/login';
   }
   if (!whiteListUrl.includes(location.pathname) && !window.localStorage.getItem('token')) {
-    window.location.href = '/login';
+    window.location.pathname = '/login';
   }
 }
 
