@@ -133,6 +133,13 @@ const BatchTasks = () => {
       key: 'timeout',
     },
     {
+      title: '置信度',
+      dataIndex: 'confidenceLevel',
+      key: 'confidenceLevel',
+      render: (_, { confidenceLevel }) =>
+        confidenceLevel !== 0 ? `${confidenceLevel.toFixed(2)}%` : '--',
+    },
+    {
       title: '容器日志',
       dataIndex: 'containerLog',
       key: 'containerLog',
