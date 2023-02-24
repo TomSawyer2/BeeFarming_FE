@@ -143,14 +143,19 @@ const History: React.FC = () => {
       title: '结果分析',
       dataIndex: 'resultAnalysis',
       key: 'resultAnalysis',
-      render: (_, { upperGoals, lowerGoals }) => {
-        const handleOpenResultChart = (upperGoals: string, lowerGoals: string) => {
+      render: (_, { upperGoals, lowerGoals, confidenceLevel }) => {
+        const handleOpenResultChart = (
+          upperGoals: string,
+          lowerGoals: string,
+          confidenceLevel: number,
+        ) => {
           if (!upperGoals || !lowerGoals) return;
           Modal.confirm({
             content: (
               <ResultChart
                 upperGoals={upperGoals}
                 lowerGoals={lowerGoals}
+                confidenceLevel={confidenceLevel}
               />
             ),
             getContainer() {
@@ -164,7 +169,9 @@ const History: React.FC = () => {
           });
         };
         return upperGoals && lowerGoals ? (
-          <Button onClick={() => handleOpenResultChart(upperGoals, lowerGoals)}>结果分析</Button>
+          <Button onClick={() => handleOpenResultChart(upperGoals, lowerGoals, confidenceLevel)}>
+            结果分析
+          </Button>
         ) : (
           '--'
         );

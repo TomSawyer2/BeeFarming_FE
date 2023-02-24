@@ -147,7 +147,7 @@ const BatchTasks = () => {
       title: '结果分析',
       dataIndex: 'resultAnalysis',
       key: 'resultAnalysis',
-      render: (_, { upperGoals, lowerGoals }) => {
+      render: (_, { upperGoals, lowerGoals, confidenceLevel }) => {
         const handleOpenResultChart = (upperGoals: string, lowerGoals: string) => {
           if (!upperGoals || !lowerGoals) return;
           Modal.confirm({
@@ -155,6 +155,7 @@ const BatchTasks = () => {
               <ResultChart
                 upperGoals={upperGoals}
                 lowerGoals={lowerGoals}
+                confidenceLevel={confidenceLevel}
               />
             ),
             width: 1000 + 48,

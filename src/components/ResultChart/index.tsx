@@ -8,10 +8,11 @@ import styles from './index.less';
 interface IProps {
   upperGoals: string;
   lowerGoals: string;
+  confidenceLevel: number;
 }
 
 const ResultChart = (props: IProps) => {
-  const { upperGoals, lowerGoals } = props;
+  const { upperGoals, lowerGoals, confidenceLevel = 0 } = props;
   const upperGoalsArr = upperGoals.split(',');
   const lowerGoalsArr = lowerGoals.split(',');
   const upperTotalHoneyArr = upperGoalsArr.map((item) => {
@@ -116,6 +117,16 @@ const ResultChart = (props: IProps) => {
   const winRateA = `${((winnersA / totalLen) * 100).toFixed(2)}%`;
   const winRateB = `${((winnersB / totalLen) * 100).toFixed(2)}%`;
 
+  const confidenceLevelColor = (val: number) => {
+    if (val <= 30) {
+      return 'red';
+    } else if (val > 30 && val <= 70) {
+      return 'yellow';
+    } else {
+      return 'green';
+    }
+  };
+
   return (
     <div className={styles.box}>
       <div className={styles.box_left}>
@@ -124,10 +135,18 @@ const ResultChart = (props: IProps) => {
           data={pieChartData}
         />
         {draw !== upperFinalGoals.length && winnersA !== winnersB ? (
-          <span className={styles.result_text}>
-            <span>玩家{winnersA > winnersB ? 'A' : 'B'}</span>以
-            {winnersA > winnersB ? winRateA : winRateB}胜率获得了胜利
-          </span>
+          <>
+            <span className={styles.result_text}>
+              <span className={styles.result_text_name}>玩家{winnersA > winnersB ? 'A' : 'B'}</span>
+              以{winnersA > winnersB ? winRateA : winRateB}胜率获得了胜利
+            </span>
+            <span className={styles.result_text}>
+              置信度：
+              <span style={{ color: confidenceLevelColor(confidenceLevel) }}>
+                {confidenceLevel.toFixed(2)}%
+              </span>
+            </span>
+          </>
         ) : (
           <span className={styles.result_text}>双方平局</span>
         )}

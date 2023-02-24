@@ -38,4 +38,5 @@ export interface BatchTask {
   endTime: string;
   timeout: number;
   containerLog?: string;
+  confidenceLevel: number;
 }

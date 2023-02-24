@@ -204,7 +204,7 @@ const BatchTasks: React.FC = () => {
       if (res.status === BatchTaskStatus.Failed && res?.containerLog) {
         handleResultErrorOpen(res?.containerLog || '');
       } else if (res.status === BatchTaskStatus.Finished) {
-        handleOpenResultChart(res.upperGoals, res.lowerGoals);
+        handleOpenResultChart(res.upperGoals, res.lowerGoals, res.confidenceLevel);
       } else if (res.status === BatchTaskStatus.Timeout) {
         message.error('任务超时');
       } else {
@@ -233,13 +233,18 @@ const BatchTasks: React.FC = () => {
     });
   };
 
-  const handleOpenResultChart = (upperGoals: string, lowerGoals: string) => {
+  const handleOpenResultChart = (
+    upperGoals: string,
+    lowerGoals: string,
+    confidenceLevel: number,
+  ) => {
     if (!upperGoals || !lowerGoals) return;
     Modal.confirm({
       content: (
         <ResultChart
           upperGoals={upperGoals}
           lowerGoals={lowerGoals}
+          confidenceLevel={confidenceLevel}
         />
       ),
       getContainer() {
