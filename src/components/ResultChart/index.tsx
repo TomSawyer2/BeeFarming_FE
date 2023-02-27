@@ -121,7 +121,7 @@ const ResultChart = (props: IProps) => {
     if (val <= 30) {
       return 'red';
     } else if (val > 30 && val <= 70) {
-      return 'yellow';
+      return '#fc8c23';
     } else {
       return 'green';
     }
