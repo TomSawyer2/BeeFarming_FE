@@ -127,6 +127,7 @@ const User = () => {
         loading={loading}
         columns={columns}
         dataSource={userList}
+        rowKey={(record) => record.id}
         pagination={{
           hideOnSinglePage: true,
           pageSize,

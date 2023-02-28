@@ -63,6 +63,7 @@ const Code = () => {
         loading={loading}
         columns={columns}
         dataSource={codeList}
+        rowKey={(record) => record?.id || 0}
         pagination={{
           hideOnSinglePage: true,
           pageSize,

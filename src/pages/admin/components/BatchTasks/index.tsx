@@ -205,6 +205,7 @@ const BatchTasks = () => {
         loading={loading}
         columns={columns}
         dataSource={taskList}
+        rowKey={(record) => record.id}
         pagination={{
           hideOnSinglePage: true,
           pageSize,

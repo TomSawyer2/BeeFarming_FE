@@ -12,6 +12,7 @@ export interface CodeParams {
   content: string;
   type: CodeType;
   codeId?: number;
+  id?: number;
 }
 
 export interface RunCodeParams {

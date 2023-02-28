@@ -117,13 +117,16 @@ const ResultChart = (props: IProps) => {
   const winRateA = `${((winnersA / totalLen) * 100).toFixed(2)}%`;
   const winRateB = `${((winnersB / totalLen) * 100).toFixed(2)}%`;
 
-  const confidenceLevelColor = (val: number) => {
-    if (val <= 30) {
-      return 'red';
-    } else if (val > 30 && val <= 70) {
-      return '#fc8c23';
-    } else {
-      return 'green';
+  const getConfidenceLevelText = (val: number) => {
+    if (val === 0) {
+      return <span className={styles.result_text}>双方旗鼓相当，无法计算置信度</span>;
+    } else if (val > 0) {
+      return (
+        <span className={styles.result_text}>
+          置信度：
+          <span style={{ color: 'green' }}>{confidenceLevel.toFixed(2)}%</span>
+        </span>
+      );
     }
   };
 
@@ -140,15 +143,13 @@ const ResultChart = (props: IProps) => {
               <span className={styles.result_text_name}>玩家{winnersA > winnersB ? 'A' : 'B'}</span>
               以{winnersA > winnersB ? winRateA : winRateB}胜率获得了胜利
             </span>
-            <span className={styles.result_text}>
-              置信度：
-              <span style={{ color: confidenceLevelColor(confidenceLevel) }}>
-                {confidenceLevel.toFixed(2)}%
-              </span>
-            </span>
+            {getConfidenceLevelText(confidenceLevel)}
           </>
         ) : (
-          <span className={styles.result_text}>双方平局</span>
+          <>
+            <span className={styles.result_text}>双方平局</span>
+            {getConfidenceLevelText(confidenceLevel)}
+          </>
         )}
       </div>
       <div className={styles.box_right}>

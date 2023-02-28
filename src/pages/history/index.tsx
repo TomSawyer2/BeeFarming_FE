@@ -207,6 +207,7 @@ const History: React.FC = () => {
         <Table
           loading={loading}
           columns={columns}
+          rowKey={(record) => record.id}
           dataSource={taskList}
           pagination={{
             hideOnSinglePage: true,

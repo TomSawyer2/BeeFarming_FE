@@ -1,5 +1,5 @@
 import Editor from '@/components/Editor';
-import { Button, Form, Input, message, Spin, Progress } from 'antd';
+import { Button, Form, Input, message, Spin, Progress, Select } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
 import { BatchTaskStatus, CodeType, UserStatus } from '@/const/typings';
@@ -359,9 +359,18 @@ const BatchTasks: React.FC = () => {
             <Form.Item
               label="运行轮数"
               name="totalRounds"
-              rules={[{ required: true, message: '请输入运行总轮数' }]}
+              rules={[{ required: true, message: '请选择运行轮数' }]}
             >
-              <Input />
+              <Select>
+                <Select.Option value={1}>1</Select.Option>
+                <Select.Option value={5}>5</Select.Option>
+                <Select.Option value={10}>10</Select.Option>
+                <Select.Option value={20}>20</Select.Option>
+                <Select.Option value={50}>50</Select.Option>
+                <Select.Option value={100}>100</Select.Option>
+                <Select.Option value={200}>200</Select.Option>
+                <Select.Option value={500}>500</Select.Option>
+              </Select>
             </Form.Item>
 
             <Form.Item
