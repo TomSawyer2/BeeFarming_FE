@@ -1,5 +1,5 @@
 import Editor from '@/components/Editor';
-import { Button, Form, Input, message, Spin, Progress, Select } from 'antd';
+import { Button, Form, Input, message, Progress, Select } from 'antd';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { uploadCode, runCode, checkResult, checkStatus, stopTask } from '@/services/user';
 import { BatchTaskStatus, CodeType, UserStatus } from '@/const/typings';
@@ -11,6 +11,7 @@ import { debounce } from 'lodash';
 import './index.less';
 import { userInfoContext, UserInfoContextProps } from '@/const/context';
 import LoadingIcon from '@/components/LoadingIcon';
+import LoadingBee from '@/components/LoadingBee';
 
 interface BatchTaskConfig {
   name: string;
@@ -288,10 +289,10 @@ const BatchTasks: React.FC = () => {
         createPortal(
           <div className="fs-mask">
             <div className="fs-mask-box">
-              <Spin
-                tip="Loading"
-                size="large"
-              />
+              <div className="loading-box">
+                <LoadingBee />
+              </div>
+
               <div className="loading-content">
                 <Progress
                   percent={Number(((currentRound / 2 / totalRounds) * 100).toFixed(2))}

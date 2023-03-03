@@ -29,8 +29,10 @@ export default defineConfig({
   ],
   title: 'BeeFarming Web',
   fastRefresh: {},
+  dynamicImport: {
+    loading: '@/components/LoadingBee/index',
+  },
   // mfsu: {},
-  dynamicImport: {},
   analyze: {
     analyzerMode: 'server',
     analyzerPort: 8888,

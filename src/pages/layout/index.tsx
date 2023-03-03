@@ -28,10 +28,10 @@ export default (props: any) => {
   return (
     <userInfoContext.Provider value={{ userInfo, setUserInfo }}>
       {!initialLizing ? (
-        <>
+        <div style={{ background: 'white' }}>
           {!whiteListUrl.includes(window.location.pathname) && <HeaderBar />}
           {props.children}
-        </>
+        </div>
       ) : null}
     </userInfoContext.Provider>
   );
